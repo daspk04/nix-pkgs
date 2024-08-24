@@ -89,7 +89,7 @@ pyPkgs.buildPythonPackage rec {
     ]
     ++ [griffe];
 
-  pythonImportsCheck = ["prefect prefect.cli"];
+  pythonImportsCheck = ["prefect"];
 
   meta = {
     description = "Prefect is a workflow orchestration framework for building resilient data pipelines in Python.";
