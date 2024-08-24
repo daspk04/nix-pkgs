@@ -76,6 +76,8 @@ pyPkgs.buildPythonPackage rec {
     websockets
   ];
 
+  pythonImportsCheck = ["prefect prefect.cli"];
+
   meta = {
     description = "Prefect is a workflow orchestration framework for building resilient data pipelines in Python.";
     homepage = "https://www.prefect.io/";
