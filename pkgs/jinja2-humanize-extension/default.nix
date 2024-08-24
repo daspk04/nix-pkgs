@@ -7,7 +7,7 @@
 }:
 pyPkgs.buildPythonPackage rec {
   pname = "jinja2-humanize-extension";
-  version = "4.0.0";
+  version = "0.4.0";
   format = "pyproject";
   docheck = false;
 
