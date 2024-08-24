@@ -40,6 +40,9 @@
           gilknocker = pkgs.callPackage ./pkgs/gilknocker/. {
             inherit system pyPkgs;
           };
+          griffe = pkgs.callPackage ./pkgs/griffe/. {
+            inherit system pyPkgs pkgs;
+          };
           jinja2-humanize-extension = pkgs.callPackage ./pkgs/jinja2-humanize-extension/. {
             inherit system pyPkgs;
           };
@@ -63,6 +66,7 @@
             inherit system pyPkgs;
             coolname = packages.coolname;
             jinja2-humanize-extension = packages.jinja2-humanize-extension;
+            griffe = packages.griffe;
           };
           pystac = pkgs.callPackage ./pkgs/pystac/. {inherit system pyPkgs;};
           pystac-client = pkgs.callPackage ./pkgs/pystac-client/. {
