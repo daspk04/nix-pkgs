@@ -53,6 +53,7 @@ pyPkgs.buildPythonPackage rec {
       graphviz
       httpcore
       httpx
+      h2
       importlib-metadata
       importlib-resources
       itsdangerous
