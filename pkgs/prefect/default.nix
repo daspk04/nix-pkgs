@@ -48,7 +48,6 @@ pyPkgs.buildPythonPackage rec {
       cryptography
       dateparser
       docker
-      docker-py
       exceptiongroup
       fsspec
       graphviz
