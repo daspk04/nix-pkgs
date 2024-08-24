@@ -73,7 +73,7 @@ pyPkgs.buildPythonPackage rec {
     typing-extensions
     ujson
     uvicorn
-    websocket
+    websockets
   ];
 
   meta = {
