@@ -24,6 +24,7 @@ pyPkgs.buildPythonPackage rec {
 
   propagatedBuildInputs = with pyPkgs; [
     humanize
+    jinja2
   ];
 
   meta = {
