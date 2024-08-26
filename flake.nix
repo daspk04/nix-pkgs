@@ -34,7 +34,16 @@
             inherit system pyPkgs;
             gilknocker = packages.gilknocker;
           };
+          coolname = pkgs.callPackage ./pkgs/coolname/. {
+            inherit system pyPkgs;
+          };
           gilknocker = pkgs.callPackage ./pkgs/gilknocker/. {
+            inherit system pyPkgs;
+          };
+          griffe = pkgs.callPackage ./pkgs/griffe/. {
+            inherit system pyPkgs pkgs;
+          };
+          jinja2-humanize-extension = pkgs.callPackage ./pkgs/jinja2-humanize-extension/. {
             inherit system pyPkgs;
           };
           odc-geo = pkgs.callPackage ./pkgs/odc-geo/. {
@@ -46,15 +55,24 @@
             pystac-client = packages.pystac-client;
             odc-geo = packages.odc-geo;
           };
-
           planetary-computer = pkgs.callPackage ./pkgs/planetary-computer/. {
             inherit system pyPkgs;
             pystac = packages.pystac;
             pystac-client = packages.pystac-client;
           };
           pyotb = pkgs.callPackage ./pkgs/pyotb/. {inherit system pyPkgs;};
+          prefect = pkgs.callPackage ./pkgs/prefect/. {
+            inherit system pyPkgs;
+            coolname = packages.coolname;
+            jinja2-humanize-extension = packages.jinja2-humanize-extension;
+            griffe = packages.griffe;
+          };
           pystac = pkgs.callPackage ./pkgs/pystac/. {inherit system pyPkgs;};
           pystac-client = pkgs.callPackage ./pkgs/pystac-client/. {
+            inherit system pyPkgs;
+            pystac = packages.pystac;
+          };
+          rio-stac = pkgs.callPackage ./pkgs/rio-stac/. {
             inherit system pyPkgs;
             pystac = packages.pystac;
           };
@@ -72,10 +90,11 @@
             xcube = packages.xcube;
           };
 
-
           coiledEnv = pkgs.buildEnv {
             name = "coiled-env";
-            paths = with pyPkgs; [dask distributed tornado cloudpickle msgpack bokeh s3fs] ++ [packages.coiled];
+            paths = with pyPkgs;
+              [dask distributed tornado cloudpickle msgpack bokeh s3fs]
+              ++ [packages.coiled packages.prefect];
           };
 
           geoEnv = pkgs.buildEnv {
@@ -95,7 +114,7 @@
 
           stacEnv = pkgs.buildEnv {
             name = "stac-env";
-            paths = with packages; [pystac pystac-client planetary-computer];
+            paths = with packages; [pystac pystac-client planetary-computer rio-stac];
           };
 
           xcubeEnv = pkgs.buildEnv {
@@ -107,7 +126,6 @@
             name = "allPkgs-env";
             paths = with packages; [coiledEnv geoEnv geoxrEnv otbEnv stacEnv xcubeEnv];
           };
-
         };
         devShells.default = pkgs.mkShell rec {
           packages = with pkgs; [
