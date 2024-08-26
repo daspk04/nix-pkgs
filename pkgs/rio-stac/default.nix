@@ -20,6 +20,7 @@ pyPkgs.buildPythonPackage rec {
   };
 
   nativeBuildInputs = with pyPkgs; [
+    flit
     setuptools
   ];
 
