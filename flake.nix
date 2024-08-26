@@ -55,7 +55,6 @@
             pystac-client = packages.pystac-client;
             odc-geo = packages.odc-geo;
           };
-
           planetary-computer = pkgs.callPackage ./pkgs/planetary-computer/. {
             inherit system pyPkgs;
             pystac = packages.pystac;
@@ -70,6 +69,10 @@
           };
           pystac = pkgs.callPackage ./pkgs/pystac/. {inherit system pyPkgs;};
           pystac-client = pkgs.callPackage ./pkgs/pystac-client/. {
+            inherit system pyPkgs;
+            pystac = packages.pystac;
+          };
+          rio-stac = pkgs.callPackage ./pkgs/rio-stac/. {
             inherit system pyPkgs;
             pystac = packages.pystac;
           };
@@ -111,7 +114,7 @@
 
           stacEnv = pkgs.buildEnv {
             name = "stac-env";
-            paths = with packages; [pystac pystac-client planetary-computer];
+            paths = with packages; [pystac pystac-client planetary-computer rio-stac];
           };
 
           xcubeEnv = pkgs.buildEnv {
