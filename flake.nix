@@ -72,6 +72,9 @@
             inherit system pyPkgs;
             pystac = packages.pystac;
           };
+          rclone-python = pkgs.callPackage ./pkgs/rclone-python/. {
+            inherit system pyPkgs;
+          };
           rio-stac = pkgs.callPackage ./pkgs/rio-stac/. {
             inherit system pyPkgs;
             pystac = packages.pystac;
@@ -122,9 +125,14 @@
             paths = with packages; [xcube xcube-sh];
           };
 
+          miscEnv = pkgs.buildEnv {
+            name = "misc-env";
+            paths = with packages; [rclone-python];
+          };
+
           allPkgsEnv = pkgs.buildEnv {
             name = "allPkgs-env";
-            paths = with packages; [coiledEnv geoEnv geoxrEnv otbEnv stacEnv xcubeEnv];
+            paths = with packages; [coiledEnv geoEnv geoxrEnv otbEnv stacEnv xcubeEnv miscEnv];
           };
         };
         devShells.default = pkgs.mkShell rec {
