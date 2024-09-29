@@ -82,6 +82,9 @@
           rioxarray = pkgs.callPackage ./pkgs/rioxarray/. {
             inherit system pyPkgs;
           };
+          verde = pkgs.callPackage ./pkgs/verde/. {
+            inherit system pyPkgs;
+          };
           xcube = pkgs.callPackage ./pkgs/xcube/. {
             inherit system pyPkgs;
             rioxarray = packages.rioxarray;
@@ -103,6 +106,11 @@
           geoEnv = pkgs.buildEnv {
             name = "geo-env";
             paths = [pyPkgs.gdal];
+          };
+
+          geomlEnv = pkgs.buildEnv {
+            name = "geoml-env";
+            paths = [packages.verde];
           };
 
           otbEnv = pkgs.buildEnv {
@@ -132,7 +140,7 @@
 
           allPkgsEnv = pkgs.buildEnv {
             name = "allPkgs-env";
-            paths = with packages; [coiledEnv geoEnv geoxrEnv otbEnv stacEnv xcubeEnv miscEnv];
+            paths = with packages; [coiledEnv geoEnv geomlEnv geoxrEnv otbEnv stacEnv xcubeEnv miscEnv];
           };
         };
         devShells.default = pkgs.mkShell rec {
