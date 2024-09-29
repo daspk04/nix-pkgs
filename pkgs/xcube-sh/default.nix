@@ -6,15 +6,15 @@
 }:
 pyPkgs.buildPythonPackage rec {
   pname = "xcube-sh";
-  version = "0.11.0-dev";
+  version = "0.11.0-unstable-2024-09-26";
   format = "pyproject";
   docheck = false;
 
   src = builtins.fetchGit {
     name = pname;
     url = "https://github.com/daspk04/xcube-sh.git";
-    ref = "add-feature-processing-kwargs";
-    rev = "b29cd3cfa1e25379857dd7ddb183211101dd892b";
+    ref = "develop";
+    rev = "49808c3cd91bee809f87cac24b2bbb2d591f5f4e";
   };
 
   nativeBuildInputs = with pyPkgs; [
