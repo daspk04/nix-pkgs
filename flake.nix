@@ -2,31 +2,43 @@
   description = "A flake for nixpkgs";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/24.05";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.follows = "nixpkgs-release";
     flake-utils.url = "github:numtide/flake-utils";
-    nix2container.url = "github:nlewo/nix2container";
+    nix2container = {
+      url = "github:nlewo/nix2container";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+    nixpkgs-nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs-nixos-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-release.url = "github:NixOS/nixpkgs/nixos-24.05";
   };
 
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-unstable,
+    nixpkgs-release,
+    nixpkgs-nixpkgs-unstable,
+    nixpkgs-nixos-unstable,
     nix2container,
     flake-utils,
   }:
     flake-utils.lib.eachDefaultSystem (
       system: let
-        pkgs = import nixpkgs {inherit system;};
+        pkgs = nixpkgs.legacyPackages.${system};
+        unstablePkgs = nixpkgs-nixos-unstable.legacyPackages.${system};
         nix2containerPkgs = nix2container.packages.${system};
-        python = pkgs.python312;
-        pyPkgs = python.pkgs;
+        python312 = pkgs.python312;
+        python312-latest = unstablePkgs.python312;
 
-        stacPy = with pyPkgs; [
-        ];
+        python311 = pkgs.python311;
+        python311-latest = unstablePkgs.python311;
+
+        python = python311-latest;
+        pyPkgs = python.pkgs;
       in rec {
         packages = {
-          python = python;
+          inherit python python311 python311-latest python312 python312-latest unstablePkgs;
           cmocean = pkgs.callPackage ./pkgs/cmocean/. {
             inherit system pyPkgs pkgs;
           };

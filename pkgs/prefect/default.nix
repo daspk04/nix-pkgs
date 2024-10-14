@@ -31,6 +31,9 @@ pyPkgs.buildPythonPackage rec {
     "exceptiongroup"
     "griffe"
     "uvicorn"
+    "pendulum"
+    "kubernetes"
+    "croniter"
   ];
 
   propagatedBuildInputs = with pyPkgs;
