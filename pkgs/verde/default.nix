@@ -47,7 +47,7 @@ pyPkgs.buildPythonPackage rec {
     often used in combination with gridding, like trend removal,
     blocked/windowed operations, cross-validation, and more!";
     homepage = "https://www.fatiando.org/verde/latest/";
-    license = lib.licenses. bsd3;
+    license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [daspk04];
   };
 }
