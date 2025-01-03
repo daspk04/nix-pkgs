@@ -4,21 +4,20 @@
   pyPkgs,
   pkgs,
   coolname,
-  griffe,
   jinja2-humanize-extension,
   ...
 }:
 pyPkgs.buildPythonPackage rec {
   pname = "prefect";
-  version = "2.20.3";
+  version = "2.20.16";
   format = "pyproject";
   docheck = false;
 
-  src = builtins.fetchGit {
-    name = pname;
-    url = "https://github.com/PrefectHQ/prefect.git";
-    ref = "refs/tags/${version}";
-    rev = "b8c27aa06d9d3892cbb1d1d69e78e604a527adae";
+  src = fetchFromGitHub {
+    owner = "PrefectHQ";
+    repo = "prefect";
+    rev = version;
+    sha256 = "sha256-MoJyvr6WpGV2xndbXlMcZ88EIXO8bSsSNRb5L3Dafk8=";
   };
 
   nativeBuildInputs = with pyPkgs; [
@@ -51,6 +50,7 @@ pyPkgs.buildPythonPackage rec {
       exceptiongroup
       fsspec
       graphviz
+      griffe
       httpcore
       httpx
       h2
@@ -86,8 +86,7 @@ pyPkgs.buildPythonPackage rec {
       ujson
       uvicorn
       websockets
-    ]
-    ++ [griffe];
+    ];
 
   pythonImportsCheck = ["prefect"];
 

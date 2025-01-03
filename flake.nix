@@ -2,7 +2,7 @@
   description = "A flake for nixpkgs";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nix2container.url = "github:nlewo/nix2container";
@@ -40,9 +40,6 @@
           gilknocker = pkgs.callPackage ./pkgs/gilknocker/. {
             inherit system pyPkgs;
           };
-          griffe = pkgs.callPackage ./pkgs/griffe/. {
-            inherit system pyPkgs pkgs;
-          };
           jinja2-humanize-extension = pkgs.callPackage ./pkgs/jinja2-humanize-extension/. {
             inherit system pyPkgs;
           };
@@ -51,8 +48,6 @@
           };
           odc-stac = pkgs.callPackage ./pkgs/odc-stac/. {
             inherit system pyPkgs;
-            pystac = packages.pystac;
-            pystac-client = packages.pystac-client;
             odc-geo = packages.odc-geo;
           };
           planetary-computer = pkgs.callPackage ./pkgs/planetary-computer/. {
@@ -65,19 +60,12 @@
             inherit system pyPkgs;
             coolname = packages.coolname;
             jinja2-humanize-extension = packages.jinja2-humanize-extension;
-            griffe = packages.griffe;
-          };
-          pystac = pkgs.callPackage ./pkgs/pystac/. {inherit system pyPkgs;};
-          pystac-client = pkgs.callPackage ./pkgs/pystac-client/. {
-            inherit system pyPkgs;
-            pystac = packages.pystac;
           };
           rclone-python = pkgs.callPackage ./pkgs/rclone-python/. {
             inherit system pyPkgs;
           };
           rio-stac = pkgs.callPackage ./pkgs/rio-stac/. {
             inherit system pyPkgs;
-            pystac = packages.pystac;
           };
           rioxarray = pkgs.callPackage ./pkgs/rioxarray/. {
             inherit system pyPkgs;
@@ -125,7 +113,7 @@
 
           stacEnv = pkgs.buildEnv {
             name = "stac-env";
-            paths = with packages; [pystac pystac-client planetary-computer rio-stac];
+            paths = with packages; [planetary-computer rio-stac];
           };
 
           xcubeEnv = pkgs.buildEnv {

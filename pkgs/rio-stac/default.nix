@@ -1,7 +1,6 @@
 {
   lib,
   fetchFromGitHub,
-  pystac,
   pyPkgs,
   pkgs,
   ...

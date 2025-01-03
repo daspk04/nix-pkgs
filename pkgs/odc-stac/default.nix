@@ -1,6 +1,4 @@
 {
-  pystac,
-  pystac-client,
   odc-geo,
   lib,
   pyPkgs,
