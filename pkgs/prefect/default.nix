@@ -13,11 +13,11 @@ pyPkgs.buildPythonPackage rec {
   format = "pyproject";
   docheck = false;
 
-  src = builtins.fetchGit {
-    name = pname;
-    url = "https://github.com/PrefectHQ/prefect.git";
-    ref = "refs/tags/${version}";
-    rev = "b8c27aa06d9d3892cbb1d1d69e78e604a527adae";
+  src = fetchFromGitHub {
+    owner = "PrefectHQ";
+    repo = "prefect";
+    rev = version;
+    sha256 = "sha256-MoJyvr6WpGV2xndbXlMcZ88EIXO8bSsSNRb5L3Dafk8=";
   };
 
   nativeBuildInputs = with pyPkgs; [
