@@ -18,7 +18,7 @@ pyPkgs.buildPythonPackage rec {
   };
 
   cargoDeps = pkgs.rustPlatform.fetchCargoTarball {
-    inherit src pname version;
+    inherit src;
 
     name = "${pname}-${version}";
     hash = "sha256-zDg+aYsHR28SCOmiswDx8tD3VbcubgHoMbZsJ3NQhyk=";
