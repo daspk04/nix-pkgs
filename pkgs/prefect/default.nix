@@ -4,13 +4,12 @@
   pyPkgs,
   pkgs,
   coolname,
-  griffe,
   jinja2-humanize-extension,
   ...
 }:
 pyPkgs.buildPythonPackage rec {
   pname = "prefect";
-  version = "2.20.3";
+  version = "2.20.16";
   format = "pyproject";
   docheck = false;
 
@@ -51,6 +50,7 @@ pyPkgs.buildPythonPackage rec {
       exceptiongroup
       fsspec
       graphviz
+      griffe
       httpcore
       httpx
       h2
@@ -86,8 +86,7 @@ pyPkgs.buildPythonPackage rec {
       ujson
       uvicorn
       websockets
-    ]
-    ++ [griffe];
+    ];
 
   pythonImportsCheck = ["prefect"];
 
