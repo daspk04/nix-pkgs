@@ -7,15 +7,15 @@
 }:
 pyPkgs.buildPythonPackage rec {
   pname = "pyotb";
-  version = "2.0.3.dev2";
+  version = "2.1.0";
   format = "pyproject";
   docheck = false;
 
-  src = builtins.fetchGit {
-    name = pname;
-    url = "https://github.com/orfeotoolbox/pyotb.git";
-    ref = "refs/tags/${version}";
-    rev = "de801eae7e2bd80706801df4a48b23998136a5cd";
+  src = fetchFromGitHub {
+    owner = "orfeotoolbox";
+    repo = "pyotb";
+    rev = "refs/tags/${version}";
+    hash = "sha256-KomIMVx4jfsTSbGtoml9ON/82sHanOkp/mp1TiUaa2E=";
   };
 
   nativeBuildInputs = with pyPkgs; [
