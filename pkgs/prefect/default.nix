@@ -17,7 +17,7 @@ pyPkgs.buildPythonPackage rec {
     owner = "PrefectHQ";
     repo = "prefect";
     rev = version;
-    sha256 = "sha256-MoJyvr6WpGV2xndbXlMcZ88EIXO8bSsSNRb5L3Dafk8=";
+    sha256 = "sha256-UY4GypQVs8qXh/nhJlbCnoqGqSRkF775xFfBwasxKyU=";
   };
 
   nativeBuildInputs = with pyPkgs; [
