@@ -48,13 +48,13 @@ pyPkgs.buildPythonPackage rec {
     wheel
   ];
 
-  pythonImportsCheck = ["coiled"];
+  pythonImportsCheck = [ "coiled" ];
 
   meta = {
     description = "A Python package to easily create, manage, and connect to Dask deployments
     using Coiled Cloud.";
     homepage = "https://docs.coiled.io";
     license = lib.licenses.bsd3;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

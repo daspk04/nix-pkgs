@@ -30,6 +30,6 @@ pyPkgs.buildPythonPackage rec {
     description = "rclone python wrapper";
     homepage = "https://github.com/Johannes11833/rclone_python.git";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

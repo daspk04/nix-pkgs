@@ -44,6 +44,6 @@ pyPkgs.buildPythonPackage rec {
     description = "An xcube plugin to allow generating data cubes from the Sentinel Hub Cloud API";
     homepage = "https://github.com/xcube-dev/xcube-sh";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

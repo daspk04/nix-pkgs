@@ -31,7 +31,8 @@ pyPkgs.buildPythonPackage rec {
     rustPlatform.cargoSetupHook
   ];
 
-  buildInputs = with pkgs;
+  buildInputs =
+    with pkgs;
     lib.optionals stdenv.isDarwin [
       libiconv
       darwin.apple_sdk.frameworks.SystemConfiguration
@@ -48,7 +49,10 @@ pyPkgs.buildPythonPackage rec {
   meta = {
     description = "Knock on the Python GIL, determine how busy it is.";
     homepage = "https://github.com/milesgranger/gilknocker";
-    license = [lib.licenses.mit lib.licenses.unlicense];
-    maintainers = with lib.maintainers; [daspk04];
+    license = [
+      lib.licenses.mit
+      lib.licenses.unlicense
+    ];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

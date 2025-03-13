@@ -30,12 +30,12 @@ pyPkgs.buildPythonPackage rec {
     pytz
     requests
   ];
-  pythonImportsCheck = ["planetary_computer"];
+  pythonImportsCheck = [ "planetary_computer" ];
 
   meta = {
     description = "Python library for interacting with the Microsoft Planetary Computer.";
     homepage = "https://pypi.org/project/planetary-computer/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

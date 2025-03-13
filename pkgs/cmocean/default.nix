@@ -33,6 +33,6 @@ pyPkgs.buildPythonPackage rec {
     description = "Beautiful colormaps for oceanography";
     homepage = "https://matplotlib.org/cmocean/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }
