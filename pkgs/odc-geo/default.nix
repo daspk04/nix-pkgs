@@ -41,6 +41,6 @@ pyPkgs.buildPythonPackage rec {
     with geospatial metadata and geo-registered `xarray` rasters.";
     homepage = "https://github.com/opendatacube/odc-geo/";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

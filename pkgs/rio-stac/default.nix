@@ -33,6 +33,6 @@ pyPkgs.buildPythonPackage rec {
     The library is built on top of pystac to make sure we follow the STAC specification.";
     homepage = "https://developmentseed.org/rio-stac/";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

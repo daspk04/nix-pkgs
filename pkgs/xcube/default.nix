@@ -23,7 +23,8 @@ pyPkgs.buildPythonPackage rec {
     setuptools
   ];
 
-  propagatedBuildInputs = with pyPkgs;
+  propagatedBuildInputs =
+    with pyPkgs;
     [
       botocore
       cftime
@@ -61,7 +62,7 @@ pyPkgs.buildPythonPackage rec {
       zarr
       cmocean
     ]
-    ++ [rioxarray];
+    ++ [ rioxarray ];
 
   pythonImportsCheck = [
     "xcube"
@@ -72,6 +73,6 @@ pyPkgs.buildPythonPackage rec {
     It has been designed in the context of Earth Observation data.";
     homepage = "https://github.com/dcs4cop/xcube";
     license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }
