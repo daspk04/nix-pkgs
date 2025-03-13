@@ -42,6 +42,6 @@ pyPkgs.buildPythonPackage rec {
     description = "Tooling for converting STAC metadata to ODC data model";
     homepage = "https://github.com/opendatacube/odc-stac/";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

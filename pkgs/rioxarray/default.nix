@@ -36,6 +36,6 @@ pyPkgs.buildPythonPackage rec {
     description = "Python library for rasterio xarray extension.";
     homepage = "http://github.com/corteva/rioxarray";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }

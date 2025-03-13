@@ -31,6 +31,6 @@ pyPkgs.buildPythonPackage rec {
     It has been built on top of the existing Python API of OTB, in order to make OTB more Python friendly.";
     homepage = "https://github.com/orfeotoolbox/pyotb";
     license = lib.licenses.asl20;
-    maintainers = with lib.maintainers; [daspk04];
+    maintainers = with lib.maintainers; [ daspk04 ];
   };
 }
