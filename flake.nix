@@ -82,6 +82,9 @@
               inherit pyPkgs;
               odc-geo = packages.odc-geo;
             };
+            otbtf = pkgs.callPackage ./pkgs/otbtf/. {
+              inherit pyPkgs;
+            };
             planetary-computer = pkgs.callPackage ./pkgs/planetary-computer/. {
               inherit pyPkgs;
               pystac = packages.pystac;
@@ -154,6 +157,7 @@
               paths = with packages; [
                 geoEnv
                 pyotb
+                otbtf
               ];
             };
 
