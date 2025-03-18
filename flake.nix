@@ -29,12 +29,19 @@
         allowUnfree = true;
       };
 
+      channels.nixpkgs.overlaysBuilder = channels: [
+        (final: prev: {
+        })
+      ];
+
       supportedSystems = [
         "aarch64-linux"
         "x86_64-linux"
       ];
 
-      channels.nixpkgs.overlaysBuilder = channels: [
+      overlay = import ./overlays;
+      sharedOverlays = [
+        self.overlay
         (final: prev: {
           python312 = prev.python312.override {
             packageOverrides = final: prevPy: {
@@ -54,72 +61,30 @@
           pkgs = channels.nixpkgs;
           python = channels.nixpkgs.python312;
           pyPkgs = python.pkgs;
-          nix2containerPkgs = nix2container.packages.${self.host.system};
+          nix2containerPkgs = nix2container.packages.${self.pkgs.system};
         in
         rec {
           packages = {
             python = python;
-            cmocean = pkgs.callPackage ./pkgs/cmocean/. {
-              inherit pyPkgs pkgs;
-            };
-            coiled = pkgs.callPackage ./pkgs/coiled/. {
-              inherit pyPkgs;
-              gilknocker = packages.gilknocker;
-            };
-            coolname = pkgs.callPackage ./pkgs/coolname/. {
-              inherit pyPkgs;
-            };
-            gilknocker = pkgs.callPackage ./pkgs/gilknocker/. {
-              inherit pyPkgs;
-            };
-            jinja2-humanize-extension = pkgs.callPackage ./pkgs/jinja2-humanize-extension/. {
-              inherit pyPkgs;
-            };
-            odc-geo = pkgs.callPackage ./pkgs/odc-geo/. {
-              inherit pyPkgs;
-            };
-            odc-stac = pkgs.callPackage ./pkgs/odc-stac/. {
-              inherit pyPkgs;
-              odc-geo = packages.odc-geo;
-            };
-            otbtf = pkgs.callPackage ./pkgs/otbtf/. {
-              inherit pyPkgs;
-            };
-            planetary-computer = pkgs.callPackage ./pkgs/planetary-computer/. {
-              inherit pyPkgs;
-              pystac = packages.pystac;
-              pystac-client = packages.pystac-client;
-            };
-            pyotb = pkgs.callPackage ./pkgs/pyotb/. {
-              inherit pyPkgs;
-            };
-            prefect = pkgs.callPackage ./pkgs/prefect/. {
-              inherit pyPkgs;
-              coolname = packages.coolname;
-              jinja2-humanize-extension = packages.jinja2-humanize-extension;
-            };
-            rclone-python = pkgs.callPackage ./pkgs/rclone-python/. {
-              inherit pyPkgs;
-            };
-            rio-stac = pkgs.callPackage ./pkgs/rio-stac/. {
-              inherit pyPkgs;
-            };
-            rioxarray = pkgs.callPackage ./pkgs/rioxarray/. {
-              inherit pyPkgs;
-            };
-            verde = pkgs.callPackage ./pkgs/verde/. {
-              inherit pyPkgs;
-            };
-            xcube = pkgs.callPackage ./pkgs/xcube/. {
-              inherit pyPkgs;
-              rioxarray = packages.rioxarray;
-              cmocean = packages.cmocean;
-            };
-
-            xcube-sh = pkgs.callPackage ./pkgs/xcube-sh/. {
-              inherit pyPkgs;
-              xcube = packages.xcube;
-            };
+            inherit (pyPkgs)
+              cmocean
+              coiled
+              coolname
+              gilknocker
+              jinja2-humanize-extension
+              odc-geo
+              odc-stac
+              otbtf
+              planetary-computer
+              prefect
+              pyotb
+              rclone-python
+              rio-stac
+              rioxarray
+              verde
+              xcube
+              xcube-sh
+              ;
 
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
@@ -134,10 +99,10 @@
                   bokeh
                   s3fs
                 ]
-                ++ [
-                  packages.coiled
-                  packages.prefect
-                ];
+                ++ (with packages; [
+                  coiled
+                  prefect
+                ]);
             };
 
             geoEnv = pkgs.buildEnv {
