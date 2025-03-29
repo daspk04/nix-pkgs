@@ -11,7 +11,7 @@
 }:
 buildPythonPackage rec {
   pname = "otbtf";
-  version = "5.0.0rc4";
+  version = "5.0.0";
   format = "pyproject";
   docheck = false;
 
@@ -19,7 +19,7 @@ buildPythonPackage rec {
     owner = "orfeo-toolbox";
     repo = "otbtf";
     rev = "${version}";
-    hash = "sha256-OpiotQvFEYiYpY2ZCjF4zOnN+mTE4oof913BXBgfDAE=";
+    hash = "sha256-XVE4b6gc9HBT49ztms0DbkKu22qrhGUK0tU+MU2jDao=";
     domain = "forgemia.inra.fr";
   };
 

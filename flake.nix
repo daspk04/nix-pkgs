@@ -176,6 +176,7 @@
               pyPkgs.python
               pyPkgs.venvShellHook
               skopeo
+              bump-my-version
             ];
             venvDir = "./.venv";
           };
