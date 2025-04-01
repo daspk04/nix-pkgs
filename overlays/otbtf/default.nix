@@ -18,8 +18,8 @@ buildPythonPackage rec {
   src = fetchFromGitLab {
     owner = "orfeo-toolbox";
     repo = "otbtf";
-    rev = "${version}";
-    hash = "sha256-XVE4b6gc9HBT49ztms0DbkKu22qrhGUK0tU+MU2jDao=";
+    rev = version;
+    hash = "sha256-6VqjuydvTmP+ES6xLQ8uSGTw/+ynYui+QkGXerYkZX8=";
     domain = "forgemia.inra.fr";
   };
 
