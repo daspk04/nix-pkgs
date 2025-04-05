@@ -27,6 +27,7 @@
       inherit self inputs;
       channelsConfig = {
         allowUnfree = true;
+        #        cudaSupport = true;
       };
 
       channels.nixpkgs.overlaysBuilder = channels: [
@@ -44,11 +45,11 @@
         self.overlay
         (final: prev: {
           python312 = prev.python312.override {
-            packageOverrides = final: prevPy: {
+            packageOverrides = finalPy: prevPy: {
               tensorflow = prevPy.tensorflow-bin;
               keras =
                 (prevPy.keras.override {
-                  tensorflow = final.tensorflow;
+                  tensorflow = finalPy.tensorflow;
                 }).overridePythonAttrs
                   (oldAttrs: {
                     dependencies = oldAttrs.dependencies or [ ] ++ [ prevPy.distutils ];
