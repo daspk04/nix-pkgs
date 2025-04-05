@@ -46,9 +46,13 @@
           python312 = prev.python312.override {
             packageOverrides = final: prevPy: {
               tensorflow = prevPy.tensorflow-bin;
-              keras = prevPy.keras.overridePythonAttrs (oldAttrs: {
-                dependencies = oldAttrs.dependencies or [ ] ++ [ prevPy.distutils ];
-              });
+              keras =
+                (prevPy.keras.override {
+                  tensorflow = final.tensorflow;
+                }).overridePythonAttrs
+                  (oldAttrs: {
+                    dependencies = oldAttrs.dependencies or [ ] ++ [ prevPy.distutils ];
+                  });
             };
           };
           python312Packages = final.python312.pkgs;
