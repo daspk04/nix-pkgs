@@ -43,21 +43,6 @@
       overlay = import ./overlays;
       sharedOverlays = [
         self.overlay
-        (final: prev: {
-          python312 = prev.python312.override {
-            packageOverrides = finalPy: prevPy: {
-              tensorflow = prevPy.tensorflow-bin;
-              keras =
-                (prevPy.keras.override {
-                  tensorflow = finalPy.tensorflow;
-                }).overridePythonAttrs
-                  (oldAttrs: {
-                    dependencies = oldAttrs.dependencies or [ ] ++ [ prevPy.distutils ];
-                  });
-            };
-          };
-          python312Packages = final.python312.pkgs;
-        })
       ];
 
       outputsBuilder =
@@ -77,6 +62,7 @@
               coolname
               gilknocker
               jinja2-humanize-extension
+              keras
               odc-geo
               odc-stac
               otbtf
@@ -86,6 +72,7 @@
               rclone-python
               rio-stac
               rioxarray
+              tensorflow
               verde
               xcube
               xcube-sh
