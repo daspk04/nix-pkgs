@@ -6,13 +6,9 @@ final: prev: {
       gilknocker = pyFinal.callPackage ./gilknocker/. { };
       jinja2-humanize-extension = pyFinal.callPackage ./jinja2-humanize-extension/. { };
 
-      keras =
-        (pyPrev.keras.override {
-          tensorflow = pyFinal.tensorflow;
-        }).overridePythonAttrs
-          (oldAttrs: {
-            dependencies = oldAttrs.dependencies or [ ] ++ [ pyPrev.distutils ];
-          });
+      keras = pyPrev.keras.overridePythonAttrs (oldAttrs: {
+        dependencies = oldAttrs.dependencies or [ ] ++ [ pyPrev.distutils ];
+      });
 
       odc-geo = pyFinal.callPackage ./odc-geo/. { };
       pyotb = pyFinal.callPackage ./pyotb/. { };
