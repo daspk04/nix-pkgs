@@ -1,6 +1,17 @@
 {
   description = "A flake for nixpkgs";
 
+    nixConfig = {
+      extra-substituters = [
+        "https://cuda-maintainers.cachix.org"
+        "https://nix-community.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -21,13 +32,16 @@
       nix2container,
       flake-utils-plus,
     }@inputs:
-
+    let
+      inherit (flake-utils-plus.lib) exportOverlays;
+    in
     flake-utils-plus.lib.mkFlake {
 
       inherit self inputs;
       channelsConfig = {
         allowUnfree = true;
-        #        cudaSupport = true;
+        # enable for cuda packages
+        # cudaSupport = true;
       };
 
       channels.nixpkgs.overlaysBuilder = channels: [
@@ -44,6 +58,10 @@
       sharedOverlays = [
         self.overlay
       ];
+
+      overlays = exportOverlays {
+        inherit (self) pkgs inputs;
+      };
 
       outputsBuilder =
         channels:
@@ -171,6 +189,9 @@
               bump-my-version
             ];
             venvDir = "./.venv";
+            postShellHook = ''
+              export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
+            '';
           };
         };
     };
