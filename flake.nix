@@ -1,6 +1,17 @@
 {
   description = "A flake for nixpkgs";
 
+    nixConfig = {
+      extra-substituters = [
+        "https://cuda-maintainers.cachix.org"
+        "https://nix-community.cachix.org"
+      ];
+      extra-trusted-public-keys = [
+        "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      ];
+    };
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -21,12 +32,16 @@
       nix2container,
       flake-utils-plus,
     }@inputs:
-
+    let
+      inherit (flake-utils-plus.lib) exportOverlays;
+    in
     flake-utils-plus.lib.mkFlake {
 
       inherit self inputs;
       channelsConfig = {
         allowUnfree = true;
+        # enable for cuda packages
+        # cudaSupport = true;
       };
 
       channels.nixpkgs.overlaysBuilder = channels: [
@@ -42,22 +57,11 @@
       overlay = import ./overlays;
       sharedOverlays = [
         self.overlay
-        (final: prev: {
-          python312 = prev.python312.override {
-            packageOverrides = final: prevPy: {
-              tensorflow = prevPy.tensorflow-bin;
-              keras =
-                (prevPy.keras.override {
-                  tensorflow = final.tensorflow;
-                }).overridePythonAttrs
-                  (oldAttrs: {
-                    dependencies = oldAttrs.dependencies or [ ] ++ [ prevPy.distutils ];
-                  });
-            };
-          };
-          python312Packages = final.python312.pkgs;
-        })
       ];
+
+      overlays = exportOverlays {
+        inherit (self) pkgs inputs;
+      };
 
       outputsBuilder =
         channels:
@@ -76,6 +80,7 @@
               coolname
               gilknocker
               jinja2-humanize-extension
+              keras
               odc-geo
               odc-stac
               otbtf
@@ -85,6 +90,7 @@
               rclone-python
               rio-stac
               rioxarray
+              tensorflow
               verde
               xcube
               xcube-sh
@@ -183,6 +189,9 @@
               bump-my-version
             ];
             venvDir = "./.venv";
+            postShellHook = ''
+              export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
+            '';
           };
         };
     };
