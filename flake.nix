@@ -1,16 +1,16 @@
 {
   description = "A flake for nixpkgs";
 
-    nixConfig = {
-      extra-substituters = [
-        "https://cuda-maintainers.cachix.org"
-        "https://nix-community.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-    };
+  nixConfig = {
+    extra-substituters = [
+      "https://cuda-maintainers.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -22,6 +22,13 @@
       url = "github:nlewo/nix2container";
       inputs.flake-utils.follows = "flake-utils-plus";
     };
+    otbpkgs = {
+      url = "github:daspk04/otb-nix?ref=v0.1.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
+      inputs.flake-utils.follows = "flake-utils-plus/flake-utils";
+      inputs.nix2container.follows = "nix2container";
+    };
   };
 
   outputs =
@@ -30,10 +37,11 @@
       nixpkgs,
       nixpkgs-unstable,
       nix2container,
+      otbpkgs,
       flake-utils-plus,
     }@inputs:
     let
-      inherit (flake-utils-plus.lib) exportOverlays;
+      inherit (flake-utils-plus.lib) exportOverlays exportPackages exportModules;
     in
     flake-utils-plus.lib.mkFlake {
 
@@ -69,7 +77,11 @@
           pkgs = channels.nixpkgs;
           python = channels.nixpkgs.python312;
           pyPkgs = python.pkgs;
-          nix2containerPkgs = nix2container.packages.${self.pkgs.system};
+          nix2containerPkgs = nix2container.packages.${pkgs.system};
+          otb = otbpkgs.packages.${pkgs.system}.otb.override {
+            python3 = python;
+            enablePython = true;
+          };
         in
         rec {
           packages = {
@@ -95,6 +107,8 @@
               xcube
               xcube-sh
               ;
+
+            otb = otb;
 
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
@@ -189,9 +203,12 @@
               bump-my-version
             ];
             venvDir = "./.venv";
-            postShellHook = ''
-              export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
-            '';
+            # required environment for otbtf-gpu (otbtf build with cuda)
+#            postShellHook = ''
+#              export CUDA_PATH=${pkgs.cudatoolkit}
+#              export XLA_FLAGS="--xla_gpu_cuda_data_dir=${pkgs.cudatoolkit}"
+#              export LD_LIBRARY_PATH="${pkgs.cudatoolkit}/lib:${pkgs.cudatoolkit}/nvvm/libdevice:$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
+#            '';
           };
         };
     };
