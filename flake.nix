@@ -22,13 +22,6 @@
       url = "github:nlewo/nix2container";
       inputs.flake-utils.follows = "flake-utils-plus";
     };
-    otbpkgs = {
-      url = "github:daspk04/otb-nix?ref=v0.1.1";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs-unstable";
-      inputs.flake-utils.follows = "flake-utils-plus/flake-utils";
-      inputs.nix2container.follows = "nix2container";
-    };
   };
 
   outputs =
@@ -37,7 +30,6 @@
       nixpkgs,
       nixpkgs-unstable,
       nix2container,
-      otbpkgs,
       flake-utils-plus,
     }@inputs:
     let
@@ -78,10 +70,6 @@
           python = channels.nixpkgs.python312;
           pyPkgs = python.pkgs;
           nix2containerPkgs = nix2container.packages.${pkgs.system};
-          otb = otbpkgs.packages.${pkgs.system}.otb.override {
-            python3 = python;
-            enablePython = true;
-          };
         in
         rec {
           packages = {
@@ -107,8 +95,9 @@
               xcube
               xcube-sh
               ;
-
-            otb = otb;
+            inherit (pkgs)
+              otb
+              ;
 
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
