@@ -1,16 +1,16 @@
 {
   description = "A flake for nixpkgs";
 
-    nixConfig = {
-      extra-substituters = [
-        "https://cuda-maintainers.cachix.org"
-        "https://nix-community.cachix.org"
-      ];
-      extra-trusted-public-keys = [
-        "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      ];
-    };
+  nixConfig = {
+    extra-substituters = [
+      "https://cuda-maintainers.cachix.org"
+      "https://nix-community.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
@@ -33,7 +33,7 @@
       flake-utils-plus,
     }@inputs:
     let
-      inherit (flake-utils-plus.lib) exportOverlays;
+      inherit (flake-utils-plus.lib) exportOverlays exportPackages exportModules;
     in
     flake-utils-plus.lib.mkFlake {
 
@@ -69,7 +69,7 @@
           pkgs = channels.nixpkgs;
           python = channels.nixpkgs.python312;
           pyPkgs = python.pkgs;
-          nix2containerPkgs = nix2container.packages.${self.pkgs.system};
+          nix2containerPkgs = nix2container.packages.${pkgs.system};
         in
         rec {
           packages = {
@@ -94,6 +94,9 @@
               verde
               xcube
               xcube-sh
+              ;
+            inherit (pkgs)
+              otb
               ;
 
             coiledEnv = pkgs.buildEnv {
@@ -189,9 +192,12 @@
               bump-my-version
             ];
             venvDir = "./.venv";
-            postShellHook = ''
-              export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
-            '';
+            # required environment for otbtf-gpu (otbtf build with cuda)
+#            postShellHook = ''
+#              export CUDA_PATH=${pkgs.cudatoolkit}
+#              export XLA_FLAGS="--xla_gpu_cuda_data_dir=${pkgs.cudatoolkit}"
+#              export LD_LIBRARY_PATH="${pkgs.cudatoolkit}/lib:${pkgs.cudatoolkit}/nvvm/libdevice:$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
+#            '';
           };
         };
     };

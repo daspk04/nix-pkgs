@@ -1,4 +1,9 @@
 final: prev: {
+  otb = final.callPackage ./otb/. {
+    python3 = final.python312;
+    enablePython = true;
+    itk = final.callPackage ./itk/. { };
+  };
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
       cmocean = pyFinal.callPackage ./cmocean/. { };
