@@ -1,6 +1,6 @@
 {
   lib,
-  fetchFromGitLab,
+  fetchFromGitHub,
   buildPythonPackage,
   setuptools,
   gdal,
@@ -15,12 +15,11 @@ buildPythonPackage rec {
   format = "pyproject";
   docheck = false;
 
-  src = fetchFromGitLab {
-    owner = "orfeo-toolbox";
+  src = fetchFromGitHub {
+    owner = "remicres";
     repo = "otbtf";
-    rev = version;
-    hash = "sha256-6VqjuydvTmP+ES6xLQ8uSGTw/+ynYui+QkGXerYkZX8=";
-    domain = "forgemia.inra.fr";
+    tag = version;
+    hash = "sha256-/UIQpaXJgQq3JOzibWHBlMqlBdp6lcNmMOv7hO0J2w4=";
   };
 
   build-system = [

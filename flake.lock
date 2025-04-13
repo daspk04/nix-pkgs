@@ -104,44 +104,12 @@
         "type": "github"
       }
     },
-    "otbpkgs": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils-plus",
-          "flake-utils"
-        ],
-        "nix2container": [
-          "nix2container"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-unstable": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1743528201,
-        "narHash": "sha256-KOkj/x0H9Ps1Y/6rX/f1NPlTyy4Pjz8Kfkd3YjWxto8=",
-        "owner": "daspk04",
-        "repo": "otb-nix",
-        "rev": "f3240a8363fb950715942087fecb2a1518fe8773",
-        "type": "github"
-      },
-      "original": {
-        "owner": "daspk04",
-        "ref": "v0.1.1",
-        "repo": "otb-nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "flake-utils-plus": "flake-utils-plus",
         "nix2container": "nix2container",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable",
-        "otbpkgs": "otbpkgs"
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
     "systems": {
