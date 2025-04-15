@@ -80,6 +80,7 @@
               coolname
               distributed
               gilknocker
+              google-auth-oauthlib
               jinja2-humanize-extension
               keras
               odc-geo
@@ -117,6 +118,14 @@
                   coiled
                   prefect
                 ]);
+            };
+
+            collisionEnv = pkgs.buildEnv {
+              name = "collision-env";
+              paths = [
+                pyPkgs.dask-image
+                packages.google-auth-oauthlib
+              ];
             };
 
             geoEnv = pkgs.buildEnv {
@@ -173,6 +182,7 @@
             allPkgsEnv = pkgs.buildEnv {
               name = "allPkgs-env";
               paths = with packages; [
+                collisionEnv
                 coiledEnv
                 geoEnv
                 geomlEnv
