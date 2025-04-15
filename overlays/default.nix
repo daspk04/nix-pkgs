@@ -24,6 +24,15 @@ final: prev: {
       });
 
       gilknocker = pyFinal.callPackage ./gilknocker/. { };
+
+      # fixes to avoid collision with dask-image-2024.5.3
+      google-auth-oauthlib = pyPrev.google-auth-oauthlib.overridePythonAttrs (oldAttrs: {
+        postInstall = ''
+          ${oldAttrs.postInstall or ""}
+          rm -rf $out/${prev.python312.sitePackages}/docs/*
+        '';
+      });
+
       jinja2-humanize-extension = pyFinal.callPackage ./jinja2-humanize-extension/. { };
 
       keras = pyPrev.keras.overridePythonAttrs (oldAttrs: {
