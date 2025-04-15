@@ -62,8 +62,6 @@ final: prev: {
         python = final.python312;
       };
 
-      torch = pyFinal.torch-bin;
-
       # https://github.com/NixOS/nixpkgs/issues/351717
       triton-bin = pyPrev.triton-bin.overridePythonAttrs (oldAttrs: {
         postFixup = ''
