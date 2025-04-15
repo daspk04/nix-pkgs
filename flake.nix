@@ -92,6 +92,7 @@
               rio-stac
               rioxarray
               tensorflow
+              torch
               verde
               xcube
               xcube-sh
