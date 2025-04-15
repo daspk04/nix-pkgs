@@ -8,6 +8,21 @@ final: prev: {
     (pyFinal: pyPrev: {
       cmocean = pyFinal.callPackage ./cmocean/. { };
       coolname = pyFinal.callPackage ./coolname/. { };
+
+      # https://github.com/dask/distributed/pull/8962
+      distributed = pyPrev.distributed.overridePythonAttrs (oldAttrs: {
+        patches = oldAttrs.patches or [ ] ++ [
+          (prev.fetchpatch {
+            url = "https://github.com/dask/distributed/commit/3ef88b3668b9a5a5f121109f3bc20c5c621d3d45.diff";
+            hash = "sha256-RJgRaiiDjmTrI0Nfye7iX/RjF3BrrbPZgeJAWs5tXvM=";
+          })
+          (prev.fetchpatch {
+            url = "https://github.com/dask/distributed/commit/0657de24bee9eff3f79e175f684853798f8b0c58.diff";
+            hash = "sha256-0p/wHJDxnNNOpXDfl1yZOId727sCZEiP5fMHJtJBufg=";
+          })
+        ];
+      });
+
       gilknocker = pyFinal.callPackage ./gilknocker/. { };
       jinja2-humanize-extension = pyFinal.callPackage ./jinja2-humanize-extension/. { };
 

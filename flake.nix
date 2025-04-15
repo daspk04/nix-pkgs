@@ -78,6 +78,7 @@
               cmocean
               coiled
               coolname
+              distributed
               gilknocker
               jinja2-humanize-extension
               keras
