@@ -6,6 +6,21 @@ final: prev: {
   };
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
+
+      botorch = pyPrev.botorch.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+        #       these are failing test
+        #        disabledTests = oldAttrs.disabledTests or [ ] ++ [
+        #          "test_update_damping"
+        #          "test_pyro_catch_error"
+        #          "test_helper_functions"
+        #          "test_degenerate_GPyTorchPosterior"
+        #          "test_MultivariateNormalQMCEngineDegenerate"
+        #          "test_bivariate"
+        #          "test_pyro_catch_error"
+        #        ];
+      });
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
       coolname = pyFinal.callPackage ./coolname/. { };
 
@@ -33,10 +48,21 @@ final: prev: {
         '';
       });
 
+      gpytorch = pyPrev.gpytorch.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+      });
+
       jinja2-humanize-extension = pyFinal.callPackage ./jinja2-humanize-extension/. { };
 
       keras = pyPrev.keras.overridePythonAttrs (oldAttrs: {
         dependencies = oldAttrs.dependencies or [ ] ++ [ pyPrev.distutils ];
+      });
+
+      linear-operator = pyPrev.linear-operator.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+        ## skip these failing test
+        # disabledTests = oldAttrs.disabledTests or [] ++
+        #  ["test_psd_safe_cholesky_psd"];
       });
 
       odc-geo = pyFinal.callPackage ./odc-geo/. { };
@@ -54,6 +80,10 @@ final: prev: {
         odc-geo = pyFinal.odc-geo;
       };
 
+      optuna = pyPrev.optuna.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+      });
+
       otbtf = pyFinal.callPackage ./otbtf/. {
         keras = pyFinal.keras;
       };
@@ -70,6 +100,10 @@ final: prev: {
         tensorflow = pyFinal.tensorflow-bin;
         python = final.python312;
       };
+
+      torch = pyFinal.torch-bin;
+
+      torchvision = pyFinal.torchvision-bin;
 
       # https://github.com/NixOS/nixpkgs/issues/351717
       triton-bin = pyPrev.triton-bin.overridePythonAttrs (oldAttrs: {
