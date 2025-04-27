@@ -75,16 +75,20 @@
           packages = {
             python = python;
             inherit (pyPkgs)
+              botorch
               cmocean
               coiled
               coolname
               distributed
               gilknocker
               google-auth-oauthlib
+              gpytorch
+              linear-operator
               jinja2-humanize-extension
               keras
               odc-geo
               odc-stac
+              optuna
               otbtf
               planetary-computer
               prefect
@@ -92,6 +96,8 @@
               rclone-python
               rio-stac
               rioxarray
+              torch
+              torchvision
               tensorflow
               verde
               xcube
