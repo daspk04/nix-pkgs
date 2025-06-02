@@ -13,7 +13,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils-plus = {
       url = "github:gytis-ivaskevicius/flake-utils-plus";
@@ -75,27 +75,12 @@
           packages = {
             python = python;
             inherit (pyPkgs)
-              botorch
               cmocean
-              coiled
-              coolname
-              distributed
-              gilknocker
               google-auth-oauthlib
-              gpytorch
-              linear-operator
-              jinja2-humanize-extension
               keras
-              odc-geo
-              odc-stac
               optuna
               otbtf
-              planetary-computer
-              prefect
               pyotb
-              rclone-python
-              rio-stac
-              rioxarray
               torch
               torchvision
               tensorflow
@@ -112,6 +97,7 @@
               paths =
                 with pyPkgs;
                 [
+                  coiled
                   dask
                   distributed
                   tornado
@@ -119,11 +105,7 @@
                   msgpack
                   bokeh
                   s3fs
-                ]
-                ++ (with packages; [
-                  coiled
-                  prefect
-                ]);
+                ];
             };
 
             collisionEnv = pkgs.buildEnv {
@@ -146,6 +128,23 @@
               ];
             };
 
+            mlEnv = pkgs.buildEnv {
+              name = "ml-env";
+              paths = with pyPkgs; [
+                onnxruntime
+                optuna
+                ray
+                polars
+                pyarrow
+                pytorch-lightning
+              ] ++ ray.optional-dependencies.air
+              ++ (with packages; [
+                  keras
+                  torch
+                  tensorflow
+                ]);
+            };
+
             otbEnv = pkgs.buildEnv {
               name = "otb-env";
               paths = with packages; [
@@ -155,9 +154,33 @@
               ];
             };
 
+            otbDevEnv = pkgs.buildEnv {
+              name = "otbDev-env";
+              paths =with packages; [
+                (otb.override {
+                 enablePython = true;
+                 enablePrefetch = true;
+                 enableOtbtf = true;
+                 enableMLUtils = true;
+#                enableNormlimSigma0 = true;
+                 enablePhenology = true;
+#                enableRTCGamma0 = true;
+                 enableBioVars = true;
+                 enableGRM = true;
+#                enableLSGRM = true;
+                  enableSimpleExtraction = true;
+                  enableTemporalGapfilling = true;
+                  enableTimeSeriesUtils = true;
+                  enableTemporalSmoothing = true;
+                  enableTf = true;
+                  tensorflow = packages.tensorflow;
+                })
+              ];
+            };
+
             geoxrEnv = pkgs.buildEnv {
               name = "geoxr-env";
-              paths = with packages; [
+              paths = with pyPkgs; [
                 rioxarray
                 odc-stac
                 odc-geo
@@ -166,7 +189,7 @@
 
             stacEnv = pkgs.buildEnv {
               name = "stac-env";
-              paths = with packages; [
+              paths = with pyPkgs; [
                 planetary-computer
                 rio-stac
               ];
@@ -182,7 +205,7 @@
 
             miscEnv = pkgs.buildEnv {
               name = "misc-env";
-              paths = with packages; [ rclone-python ];
+              paths = with pyPkgs; [ rclone-python ];
             };
 
             allPkgsEnv = pkgs.buildEnv {
@@ -193,6 +216,7 @@
                 geoEnv
                 geomlEnv
                 geoxrEnv
+                mlEnv
                 otbEnv
                 stacEnv
                 xcubeEnv
