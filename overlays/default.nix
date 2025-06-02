@@ -23,10 +23,6 @@ final: prev: {
       });
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
-      rclone-python = pyFinal.callPackage ./rclone-python/. { };
-      rio-stac = pyFinal.callPackage ./rio-stac/. { };
-      rioxarray = pyFinal.callPackage ./rioxarray/. { };
-      verde = pyFinal.callPackage ./verde/. { };
 
       optuna = pyPrev.optuna.overridePythonAttrs (oldAttrs: {
         doCheck = false;
@@ -45,8 +41,9 @@ final: prev: {
 
       torchvision = pyFinal.torchvision-bin;
 
+      verde = pyFinal.callPackage ./verde/. { };
+
       xcube = pyFinal.callPackage ./xcube/. {
-        rioxarray = pyFinal.rioxarray;
         cmocean = pyFinal.cmocean;
       };
 

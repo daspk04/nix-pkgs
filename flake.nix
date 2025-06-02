@@ -94,18 +94,16 @@
 
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
-              paths =
-                with pyPkgs;
-                [
-                  coiled
-                  dask
-                  distributed
-                  tornado
-                  cloudpickle
-                  msgpack
-                  bokeh
-                  s3fs
-                ];
+              paths = with pyPkgs; [
+                coiled
+                dask
+                distributed
+                tornado
+                cloudpickle
+                msgpack
+                bokeh
+                s3fs
+              ];
             };
 
             collisionEnv = pkgs.buildEnv {
@@ -130,15 +128,18 @@
 
             mlEnv = pkgs.buildEnv {
               name = "ml-env";
-              paths = with pyPkgs; [
-                onnxruntime
-                optuna
-                ray
-                polars
-                pyarrow
-                pytorch-lightning
-              ] ++ ray.optional-dependencies.air
-              ++ (with packages; [
+              paths =
+                with pyPkgs;
+                [
+                  onnxruntime
+                  optuna
+                  ray
+                  polars
+                  pyarrow
+                  pytorch-lightning
+                ]
+                ++ ray.optional-dependencies.air
+                ++ (with packages; [
                   keras
                   torch
                   tensorflow
@@ -156,18 +157,18 @@
 
             otbDevEnv = pkgs.buildEnv {
               name = "otbDev-env";
-              paths =with packages; [
+              paths = with packages; [
                 (otb.override {
-                 enablePython = true;
-                 enablePrefetch = true;
-                 enableOtbtf = true;
-                 enableMLUtils = true;
-#                enableNormlimSigma0 = true;
-                 enablePhenology = true;
-#                enableRTCGamma0 = true;
-                 enableBioVars = true;
-                 enableGRM = true;
-#                enableLSGRM = true;
+                  enablePython = true;
+                  enablePrefetch = true;
+                  enableOtbtf = true;
+                  enableMLUtils = true;
+                  # enableNormlimSigma0 = true;
+                  enablePhenology = true;
+                  # enableRTCGamma0 = true;
+                  enableBioVars = true;
+                  enableGRM = true;
+                  # enableLSGRM = true;
                   enableSimpleExtraction = true;
                   enableTemporalGapfilling = true;
                   enableTimeSeriesUtils = true;

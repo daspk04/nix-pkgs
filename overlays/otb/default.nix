@@ -76,6 +76,7 @@ let
   otbTsSmooth = pkgs.callPackage ./otb-temporalsmoothing/. { };
   otbNormlimSigma0 = pkgs.callPackage ./otb-s1tiling-normlimsigma0/. { };
   otbRTCGamma0 = pkgs.callPackage ./otb-s1tiling-rtcgamma0/. { };
+in
 #  otb-itk = itk.overrideAttrs (oldArgs: {
 #      cmakeFlags = oldArgs.cmakeFlags or [ ] ++ [
 #      (lib.cmakeBool "Module_ITKDeprecated" true)
@@ -83,11 +84,10 @@ let
 #      (lib.cmakeBool "ITKV4_COMPATIBILITY" true)
 #      ];
 #  });
-in
 (otb.override {
   stdenv = stdenv;
   python3 = python3;
-#  itk = otb-itk;
+  #  itk = otb-itk;
   enableFFTW = enableFFTW;
   enableFeatureExtraction = enableFeatureExtraction;
   enableHyperspectral = enableHyperspectral;
@@ -188,7 +188,9 @@ in
       ++ optional enableTimeSeriesUtils (lib.cmakeBool "Module_TimeSeriesUtils" true)
       ++ optional enableTemporalSmoothing (lib.cmakeBool "Module_TemporalSmoothing" true);
 
-    buildInputs = (oldAttrs.buildInputs or []) ++ optionals enableTemporalGapfilling [ gsl ];
-    propagatedBuildInputs = (oldAttrs.propagatedBuildInputs or []) ++ optionals enableTf [ tensorflow ];
+    buildInputs = (oldAttrs.buildInputs or [ ]) ++ optionals enableTemporalGapfilling [ gsl ];
+    propagatedBuildInputs =
+      (oldAttrs.propagatedBuildInputs or [ ])
+      ++ optionals enableTf [ tensorflow ];
 
   })
