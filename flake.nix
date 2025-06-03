@@ -80,6 +80,7 @@
               keras
               optuna
               otbtf
+              prefect
               pyinterp
               pyotb
               torch
@@ -96,14 +97,15 @@
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
               paths = with pyPkgs; [
+                bokeh
+                cloudpickle
                 coiled
                 dask
                 distributed
-                tornado
-                cloudpickle
                 msgpack
-                bokeh
+                prefect
                 s3fs
+                tornado
               ];
             };
 
