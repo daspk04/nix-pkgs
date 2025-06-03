@@ -33,6 +33,10 @@ buildPythonPackage rec {
     tqdm
   ];
 
+  postPatch = ''
+    substituteInPlace pyproject.toml --replace-fail 'numpy<2' 'numpy'
+  '';
+
   pythonImportsCheck = [
     "otbtf"
     "otbtf.dataset"
