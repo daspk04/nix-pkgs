@@ -103,7 +103,7 @@
               paths = [
                 packages.runpod
                 packages.runpodctl
-                packahes.skypilot
+                packages.skypilot
               ];
             };
 

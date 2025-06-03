@@ -42,31 +42,31 @@
   wheel,
 
   # optional
-  ray,
-  grpcio,
-  protobuf,
   awscli,
-  botocore,
-  boto3,
   azure-cli,
   azure-core,
   azure-identity,
-  azure-mgmt-network,
   azure-mgmt-compute,
+  azure-mgmt-network,
   azure-storage-blob,
-  msgraph-sdk,
+  boto3,
+  botocore,
+  docker,
   google-api-python-client,
   google-cloud-storage,
-  pyopenssl,
+  grpcio,
   ibm-cloud-sdk-core,
-#  ibm-vpc,
-#  ibm-platform-services,
-#  ibm-cos-sdk,
-  docker,
+  #  ibm-cos-sdk
+  #  ibm-platform-services
+  #  ibm-vpc
   kubernetes,
-  websockets,
-  runpod,
+  msgraph-sdk,
+  protobuf,
+  pyopenssl,
   pyvmomi,
+  ray,
+  runpod,
+  websockets,
   ...
 }:
 buildPythonPackage rec {
@@ -129,71 +129,87 @@ buildPythonPackage rec {
     ++ fastapi.optional-dependencies.all
     ++ uvicorn.optional-dependencies.standard;
 
-  optional-dependencies = {
-    ray = [ ray ] ++ ray.optional-dependencies.default;
-    remote = [
-      grpcio
-      protobuf
-    ];
+  optional-dependencies = lib.fix (self: {
+
     aws = [
       awscli
-      botocore
       boto3
+      botocore
       colorama
     ];
-    azure = [
-      azure-cli
-      azure-core
-      azure-identity
-      azure-mgmt-network
-      azure-mgmt-compute
-      azure-storage-blob
-      msgraph-sdk
-    ];
+
+    azure =
+      [
+        azure-cli
+        azure-core
+        azure-identity
+        azure-mgmt-compute
+        azure-mgmt-network
+        azure-storage-blob
+        msgraph-sdk
+      ]
+      ++ self.ray;
+
+    cloudfare = self.aws;
+
+    #    cudo = [cudo-compute];
+
+    #    do = [pydo azure-core azure-common];
+
+    docker = [ docker ];
+
+    fluidstack = [ ];
+
     gcp = [
       google-api-python-client
       google-cloud-storage
       pyopenssl
     ];
-    ibm = [
-      ibm-cloud-sdk-core
-#      ibm-vpc
-#      ibm-platform-services
-#      ibm-cos-sdk
-    ];
-    docker = [ docker ];
-    lambda = [ ];
-    cloudfare = [
-      awscli
-      botocore
-      boto3
-      colorama
-    ];
-    scp = [ ray ] ++ ray.optional-dependencies.default;
+
+    ibm =
+      [
+        ibm-cloud-sdk-core
+        #      ibm-cos-sdk
+        #      ibm-platform-services
+        #      ibm-vpc
+      ]
+      ++ self.ray;
+
     kubernetes = [
       kubernetes
       websockets
     ];
-    ssh = [
-      kubernetes
-      websockets
-    ];
-    runpod = [ runpod ];
-    fluidstack = [ ];
-    #    cudo = [cudo-compute];
+
+    lambda = [ ];
+
+    #    nebius = [
+    #      nebius
+    #    ]
+    #    ++ self.aws
+    #    ;
+
     paperspace = [ ];
-    #    do = [pydo azure-core azure-common];
+
+    ray = [ ray ] ++ ray.optional-dependencies.default;
+
+    remote = [
+      grpcio
+      protobuf
+    ];
+
+    runpod = [ runpod ];
+
+    scp = self.ray;
+
+    ssh = self.kubernetes;
+
     #    vast = [vastai-sdk];
+
     vsphere = [
       pyvmomi
       #     vsphere-automation-sdk
     ];
-    #     nebius = [
-    #     nebius
-    #     ]
-    #     ++ aws
-    #     ;
-  };
+  });
 
   pythonImportsCheck = [
     "sky"
