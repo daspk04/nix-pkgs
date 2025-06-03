@@ -22,6 +22,8 @@ final: prev: {
         doCheck = false;
       });
 
+      prefect = pyFinal.callPackage ./prefect/. { };
+
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
       pyinterp = pyFinal.callPackage ./pyinterp/. { };
