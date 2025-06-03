@@ -84,6 +84,7 @@
               pyinterp
               pyotb
               runpod
+              skypilot
               torch
               torchvision
               tensorflow
@@ -102,6 +103,7 @@
               paths = [
                 packages.runpod
                 packages.runpodctl
+                packahes.skypilot
               ];
             };
 

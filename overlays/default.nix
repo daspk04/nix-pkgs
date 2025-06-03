@@ -42,6 +42,10 @@ final: prev: {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
 
+      skypilot = pyFinal.callPackage ./skypilot/. {
+         runpod = pyFinal.runpod;
+      };
+
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
         python = final.python312;
