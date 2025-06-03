@@ -83,16 +83,27 @@
               prefect
               pyinterp
               pyotb
+              runpod
               torch
               torchvision
               tensorflow
+              tqdm-loggable
               verde
               xcube
               xcube-sh
               ;
             inherit (pkgs)
               otb
+              runpodctl
               ;
+
+            cloudEnv = pkgs.buildEnv {
+              name = "cloudEnv";
+              paths = [
+                packages.runpod
+                packages.runpodctl
+              ];
+            };
 
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
@@ -216,6 +227,7 @@
             allPkgsEnv = pkgs.buildEnv {
               name = "allPkgs-env";
               paths = with packages; [
+                cloudEnv
                 collisionEnv
                 coiledEnv
                 geoEnv
