@@ -75,8 +75,14 @@
           packages = {
             python = python;
             inherit (pyPkgs)
+              cached-classproperty
               cmocean
+              cursor
+              datacrunch
+              dstack
               google-auth-oauthlib
+              gpuhunt
+              ignore-python
               keras
               nebius
               optuna
@@ -84,6 +90,7 @@
               prefect
               pyinterp
               pyotb
+              pydantic-duality
               runpod
               skypilot
               torch
@@ -102,6 +109,7 @@
             cloudEnv = pkgs.buildEnv {
               name = "cloudEnv";
               paths = [
+                packages.dstack
                 packages.runpod
                 packages.runpodctl
                 packages.skypilot
