@@ -24,6 +24,8 @@ final: prev: {
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
+      pyinterp = pyFinal.callPackage ./pyinterp/. { };
+
       optuna = pyPrev.optuna.overridePythonAttrs (oldAttrs: {
         doCheck = false;
       });

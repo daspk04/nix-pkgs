@@ -80,6 +80,7 @@
               keras
               optuna
               otbtf
+              pyinterp
               pyotb
               torch
               torchvision
@@ -123,6 +124,7 @@
               name = "geoml-env";
               paths = [
                 packages.verde
+                packages.pyinterp
               ];
             };
 
