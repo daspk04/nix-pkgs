@@ -24,6 +24,8 @@ final: prev: {
         doCheck = false;
       });
 
+      nebius = pyFinal.callPackage ./nebius/. { };
+
       optuna = pyPrev.optuna.overridePythonAttrs (oldAttrs: {
         doCheck = false;
       });
@@ -40,6 +42,11 @@ final: prev: {
 
       runpod = pyFinal.callPackage ./runpod/runpod-python/. {
         tqdm-loggable = pyFinal.tqdm-loggable;
+      };
+
+      skypilot = pyFinal.callPackage ./skypilot/. {
+         runpod = pyFinal.runpod;
+         nebius = pyFinal.nebius;
       };
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {

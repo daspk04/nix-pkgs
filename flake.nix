@@ -78,12 +78,14 @@
               cmocean
               google-auth-oauthlib
               keras
+              nebius
               optuna
               otbtf
               prefect
               pyinterp
               pyotb
               runpod
+              skypilot
               torch
               torchvision
               tensorflow
@@ -102,6 +104,7 @@
               paths = [
                 packages.runpod
                 packages.runpodctl
+                packages.skypilot
               ];
             };
 
