@@ -78,6 +78,7 @@
               cmocean
               google-auth-oauthlib
               keras
+              nebius
               optuna
               otbtf
               prefect

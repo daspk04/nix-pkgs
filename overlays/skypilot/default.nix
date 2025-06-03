@@ -61,6 +61,7 @@
   #  ibm-vpc
   kubernetes,
   msgraph-sdk,
+  nebius,
   protobuf,
   pyopenssl,
   pyvmomi,
@@ -138,17 +139,15 @@ buildPythonPackage rec {
       colorama
     ];
 
-    azure =
-      [
-        azure-cli
-        azure-core
-        azure-identity
-        azure-mgmt-compute
-        azure-mgmt-network
-        azure-storage-blob
-        msgraph-sdk
-      ]
-      ++ self.ray;
+    azure = [
+      azure-cli
+      azure-core
+      azure-identity
+      azure-mgmt-compute
+      azure-mgmt-network
+      azure-storage-blob
+      msgraph-sdk
+    ] ++ self.ray;
 
     cloudfare = self.aws;
 
@@ -166,14 +165,12 @@ buildPythonPackage rec {
       pyopenssl
     ];
 
-    ibm =
-      [
-        ibm-cloud-sdk-core
-        #      ibm-cos-sdk
-        #      ibm-platform-services
-        #      ibm-vpc
-      ]
-      ++ self.ray;
+    ibm = [
+      ibm-cloud-sdk-core
+      #      ibm-cos-sdk
+      #      ibm-platform-services
+      #      ibm-vpc
+    ] ++ self.ray;
 
     kubernetes = [
       kubernetes
@@ -182,11 +179,9 @@ buildPythonPackage rec {
 
     lambda = [ ];
 
-    #    nebius = [
-    #      nebius
-    #    ]
-    #    ++ self.aws
-    #    ;
+    nebius = [
+      nebius
+    ] ++ self.aws;
 
     paperspace = [ ];
 
