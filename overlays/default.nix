@@ -5,6 +5,8 @@ final: prev: {
     otb = prev.otb;
   };
 
+  runpodctl = final.callPackage ./runpod/runpodctl/. { };
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
@@ -22,11 +24,7 @@ final: prev: {
         doCheck = false;
       });
 
-      prefect = pyFinal.callPackage ./prefect/. { };
-
-      pyotb = pyFinal.callPackage ./pyotb/. { };
-
-      pyinterp = pyFinal.callPackage ./pyinterp/. { };
+      nebius = pyFinal.callPackage ./nebius/. { };
 
       optuna = pyPrev.optuna.overridePythonAttrs (oldAttrs: {
         doCheck = false;
@@ -34,6 +32,21 @@ final: prev: {
 
       otbtf = pyFinal.callPackage ./otbtf/. {
         keras = pyFinal.keras;
+      };
+
+      prefect = pyFinal.callPackage ./prefect/. { };
+
+      pyotb = pyFinal.callPackage ./pyotb/. { };
+
+      pyinterp = pyFinal.callPackage ./pyinterp/. { };
+
+      runpod = pyFinal.callPackage ./runpod/runpod-python/. {
+        tqdm-loggable = pyFinal.tqdm-loggable;
+      };
+
+      skypilot = pyFinal.callPackage ./skypilot/. {
+         runpod = pyFinal.runpod;
+         nebius = pyFinal.nebius;
       };
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {
@@ -44,6 +57,8 @@ final: prev: {
       torch = pyFinal.torch-bin;
 
       torchvision = pyFinal.torchvision-bin;
+
+      tqdm-loggable = pyFinal.callPackage ./tqdm-loggable/. { };
 
       verde = pyFinal.callPackage ./verde/. { };
 

@@ -78,21 +78,35 @@
               cmocean
               google-auth-oauthlib
               keras
+              nebius
               optuna
               otbtf
               prefect
               pyinterp
               pyotb
+              runpod
+              skypilot
               torch
               torchvision
               tensorflow
+              tqdm-loggable
               verde
               xcube
               xcube-sh
               ;
             inherit (pkgs)
               otb
+              runpodctl
               ;
+
+            cloudEnv = pkgs.buildEnv {
+              name = "cloudEnv";
+              paths = [
+                packages.runpod
+                packages.runpodctl
+                packages.skypilot
+              ];
+            };
 
             coiledEnv = pkgs.buildEnv {
               name = "coiled-env";
@@ -216,6 +230,7 @@
             allPkgsEnv = pkgs.buildEnv {
               name = "allPkgs-env";
               paths = with packages; [
+                cloudEnv
                 collisionEnv
                 coiledEnv
                 geoEnv
