@@ -10,7 +10,22 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
+      cached-classproperty = pyFinal.callPackage ./cached-classproperty/. { };
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
+
+      cursor = pyFinal.callPackage ./cursor/. { };
+
+      datacrunch = pyFinal.callPackage ./datacrunch/. { };
+
+      dstack = pyFinal.callPackage ./dstack/. {
+         cursor = pyFinal.cursor;
+         datacrunch = pyFinal.datacrunch;
+         gpuhunt = pyFinal.gpuhunt;
+         ignore-python = pyFinal.ignore-python;
+         nebius = pyFinal.nebius;
+         pydantic-duality = pyFinal.pydantic-duality;
+      };
 
       # fixes to avoid collision with dask-image-2024.5.3
       google-auth-oauthlib = pyPrev.google-auth-oauthlib.overridePythonAttrs (oldAttrs: {
@@ -19,6 +34,10 @@ final: prev: {
           rm -rf $out/${prev.python312.sitePackages}/docs/*
         '';
       });
+
+      gpuhunt = pyFinal.callPackage ./gpuhunt/. { };
+
+      ignore-python = pyFinal.callPackage ./ignore-python/. { };
 
       keras = pyPrev.keras.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
@@ -39,6 +58,10 @@ final: prev: {
       };
 
       prefect = pyFinal.callPackage ./prefect/. { };
+
+      pydantic-duality = pyFinal.callPackage ./pydantic-duality/. {
+        cached-classproperty = pyFinal.cached-classproperty;
+      };
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
