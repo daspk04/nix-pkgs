@@ -25,12 +25,11 @@ buildPythonPackage rec {
     hash = "sha256-hjpGwmb2QQi/WCr+nY4PQvmRSGBoOAGvZWvsg7hCtw0=";
   };
 
-  patches = [
-    (fetchpatch {
-      url = "https://github.com/tradingstrategy-ai/tqdm-loggable/pull/8.patch";
-      hash = "sha256-jNEhZWBj6mAcimqL1TydEGPVqkPiRnLlh7O2ykqtO0I=";
-    })
-  ];
+  postPatch = ''
+    substituteInPlace tqdm_loggable/tqdm_logging.py \
+    --replace-fail 'from datetime import datetime, timedelta' 'from datetime import datetime, timedelta, UTC' \
+    --replace-fail 'datetime.utcfromtimestamp(0)' 'datetime.fromtimestamp(0, UTC(0))'
+  '';
 
   build-system = [
     setuptools
@@ -43,7 +42,8 @@ buildPythonPackage rec {
   ];
 
   pythonImportsCheck = [
-    "tqdm_loggable"
+    "tqdm_loggable.auto"
+    "tqdm_loggable.tqdm_logging"
   ];
 
   meta = {
