@@ -1,7 +1,7 @@
 #   This module includes code from the OTB remote module TemporalSmoothing
 #   Copyright Rémi Cresson (IRSTEA)
 #   https://gitlab.irstea.fr/remi.cresson/TemporalSmoothing/-/blob/master/LICENSE
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-temporalsmoothing";
   url = "https://gitlab.irstea.fr/remi.cresson/TemporalSmoothing.git";

@@ -1,9 +1,7 @@
 {
   lib,
   fetchFromGitHub,
-  fetchpatch,
   buildPythonPackage,
-  pkgs,
 
   setuptools,
   setuptools-scm,

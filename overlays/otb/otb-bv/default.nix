@@ -1,7 +1,7 @@
 #  This module includes code from the OTB remote module otb-bv
 #  Copyright Jordi Inglada
 #  https://gitlab.orfeo-toolbox.org/jinglada/otb-bv/-/blob/master/otb-bv-copyright.txt
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-biovars";
   url = "https://gitlab.orfeo-toolbox.org/jinglada/otb-bv.git";

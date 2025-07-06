@@ -30,8 +30,6 @@
   dask,
   numpy,
   xarray,
-
-  pkgs,
   ...
 }:
 buildPythonPackage rec {

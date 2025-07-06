@@ -1,7 +1,7 @@
 #  This module includes code from the OTB remote module otb-prefetch
 #  Copyright 2024 Rémi Cresson (INRAE)
 #  https://github.com/remicres/otb-prefetch/blob/main/LICENSE
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-prefetch";
   url = "https://github.com/remicres/otb-prefetch.git";

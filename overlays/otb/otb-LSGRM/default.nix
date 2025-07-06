@@ -3,7 +3,7 @@
 #  author: Pierre Lassalle
 #  additional contributors: Remi Cresson, Raffaele Gaetano
 #  https://gitlab.irstea.fr/remi.cresson/LSGRM/-/blob/master/grmlib-copyright.txt
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-LSGRM";
   url = "https://gitlab.irstea.fr/remi.cresson/LSGRM.git";

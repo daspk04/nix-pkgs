@@ -2,7 +2,7 @@
 #   Copyright (c) Centre National d'Études Spatiales
 #   author: Lassalle Pierre
 #   https://gitlab.irstea.fr/remi.cresson/GRM/-/tree/master/#licence
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-GRM";
   url = "https://gitlab.irstea.fr/remi.cresson/GRM.git";

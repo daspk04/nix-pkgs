@@ -2,7 +2,6 @@
   lib,
   fetchFromGitHub,
   buildPythonPackage,
-  pkgs,
 
   setuptools,
   setuptools-scm,

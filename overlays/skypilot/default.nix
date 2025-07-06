@@ -1,8 +1,7 @@
 {
   lib,
-  fetchFromGitHub,
+  fetchPypi,
   buildPythonPackage,
-  pkgs,
 
   setuptools,
   setuptools-scm,
@@ -73,15 +72,18 @@
 buildPythonPackage rec {
   pname = "skypilot";
   version = "0.9.3";
-  format = "pyproject";
-  docheck = false;
-
-  src = fetchFromGitHub {
-    owner = "skypilot-org";
-    repo = "skypilot";
-    tag = "v${version}";
-    hash = "sha256-iKNvzGiKM4QSG25CusZ1YRIou010uWyMLEAaFIww+FA=";
+  src = fetchPypi {
+    inherit version pname;
+    hash = "sha256-kIi0YHrOVXS4pzN5looDPOKf3JD2i/tO0H4E3uRoHuY=";
   };
+
+  # source doesn't have dashboard artifacts outputs needs to build them via npm
+  #  src = fetchFromGitHub {
+  #    owner = "skypilot-org";
+  #    repo = "skypilot";
+  #    tag = "v${version}";
+  #    hash = "sha256-iKNvzGiKM4QSG25CusZ1YRIou010uWyMLEAaFIww+FA=";
+  #  };
 
   nativeBuildInputs = [
     writableTmpDirAsHomeHook

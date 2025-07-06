@@ -1,6 +1,5 @@
 {
   lib,
-  fetchFromGitHub,
   buildPythonPackage,
   setuptools,
   setuptools-scm,

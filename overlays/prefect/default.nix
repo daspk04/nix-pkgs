@@ -1,10 +1,7 @@
 {
   lib,
   fetchFromGitHub,
-  pkgs,
   buildPythonPackage,
-  setuptools,
-  pythonRelaxDepsHook,
 
   hatchling,
 
@@ -31,8 +28,6 @@
   httpx,
   humanize,
   importlib-metadata,
-  importlib-resources,
-  itsdangerous,
   jsonpatch,
   jsonschema,
   jinja2,
