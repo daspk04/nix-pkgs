@@ -5,7 +5,6 @@
   matplotlib,
   setuptools,
   #  pyPkgs,
-  pkgs,
   ...
 }:
 buildPythonPackage rec {

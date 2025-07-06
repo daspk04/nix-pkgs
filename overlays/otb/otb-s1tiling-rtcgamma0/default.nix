@@ -2,7 +2,7 @@
 #  Copyright 2020-2023 (c) CS GROUP.
 #  Copyright 2024 (c) CNES.
 #  https://gitlab.orfeo-toolbox.org/s1-tiling/rtc_gamma0/-/blob/main/LICENSE
-{ pkgs, fetchFromGitLab, ... }:
+{ fetchFromGitLab, ... }:
 fetchFromGitLab {
   owner = "s1-tiling";
   repo = "rtc_gamma0";

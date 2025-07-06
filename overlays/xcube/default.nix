@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   buildPythonPackage,
   setuptools,
 

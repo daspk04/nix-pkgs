@@ -1,6 +1,5 @@
 # tensorflow package patched with missing header files, required for building otbtf tensorflow module
 {
-  pkgs,
   python,
   tensorflow,
   fetchFromGitHub,

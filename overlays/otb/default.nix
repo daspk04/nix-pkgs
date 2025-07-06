@@ -15,11 +15,9 @@
   pkgs,
   clangStdenv,
   lib,
-  stdenv,
 
   gsl,
   otb,
-  itk,
   python3,
   tensorflow ? null,
   onnxruntime,
@@ -59,7 +57,7 @@
   ...
 }:
 let
-  inherit (lib) optionalString optionals optional;
+  inherit (lib) optionals optional;
   stdenv = clangStdenv;
 
   # remote modules based on :
@@ -200,7 +198,13 @@ in
       ++ optional enableTimeSeriesUtils (lib.cmakeBool "Module_TimeSeriesUtils" true)
       ++ optional enableTemporalSmoothing (lib.cmakeBool "Module_TemporalSmoothing" true);
 
-    buildInputs = (oldAttrs.buildInputs or [ ]) ++ optionals enableTemporalGapfilling [ gsl ] ++ optionals enableOtbOnnx [ onnxruntime onnxruntime.dev ];
+    buildInputs =
+      (oldAttrs.buildInputs or [ ])
+      ++ optionals enableTemporalGapfilling [ gsl ]
+      ++ optionals enableOtbOnnx [
+        onnxruntime
+        onnxruntime.dev
+      ];
     propagatedBuildInputs =
       (oldAttrs.propagatedBuildInputs or [ ])
       ++ optionals enableTf [ tensorflow ];

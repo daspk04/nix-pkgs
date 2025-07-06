@@ -2,7 +2,6 @@
   lib,
   fetchPypi,
   buildPythonPackage,
-  pkgs,
 
   setuptools,
   setuptools-scm,

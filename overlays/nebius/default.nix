@@ -2,17 +2,16 @@
   lib,
   fetchFromGitHub,
   buildPythonPackage,
-  pkgs,
 
   setuptools,
 
-    certifi,
-    cryptography,
-    grpcio,
-    grpcio-status,
-    protobuf,
-    pyjwt,
-    pyyaml,
+  certifi,
+  cryptography,
+  grpcio,
+  grpcio-status,
+  protobuf,
+  pyjwt,
+  pyyaml,
   ...
 }:
 buildPythonPackage rec {

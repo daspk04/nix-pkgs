@@ -1,7 +1,7 @@
 #  This module includes code from the OTB remote module temporalgapfilling
 #  Copyright Jordi Inglada
 #  https://gitlab.orfeo-toolbox.org/jinglada/temporalgapfilling/-/blob/master/LICENSE
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-temporalgapfilling";
   url = "https://gitlab.orfeo-toolbox.org/jinglada/temporalgapfilling.git";
