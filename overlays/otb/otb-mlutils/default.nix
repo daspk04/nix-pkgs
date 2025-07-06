@@ -1,7 +1,7 @@
 #   This module includes code from the OTB remote module otb-mlutils
 #   Copyright Rémi Cresson (IRSTEA)
 #   https://forgemia.inra.fr/orfeo-toolbox/otb-mlutils/-/blob/master/LICENSE
-{ pkgs, ... }:
+{ ... }:
 builtins.fetchGit {
   name = "otb-mlutils";
   url = "https://forgemia.inra.fr/orfeo-toolbox/otb-mlutils.git";

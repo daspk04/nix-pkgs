@@ -20,13 +20,13 @@ final: prev: {
         '';
       });
 
-      keras = pyPrev.keras.overridePythonAttrs (oldAttrs: {
+      keras = pyPrev.keras.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
 
       nebius = pyFinal.callPackage ./nebius/. { };
 
-      optuna = pyPrev.optuna.overridePythonAttrs (oldAttrs: {
+      optuna = pyPrev.optuna.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
 
@@ -49,8 +49,8 @@ final: prev: {
       };
 
       skypilot = pyFinal.callPackage ./skypilot/. {
-         runpod = pyFinal.runpod;
-         nebius = pyFinal.nebius;
+        runpod = pyFinal.runpod;
+        nebius = pyFinal.nebius;
       };
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {

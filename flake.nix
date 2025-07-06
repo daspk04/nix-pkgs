@@ -20,20 +20,26 @@
     };
     nix2container = {
       url = "github:nlewo/nix2container";
-      inputs.flake-utils.follows = "flake-utils-plus";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-
   outputs =
     {
       self,
       nixpkgs,
+      # deadnix: skip
       nixpkgs-unstable,
+      # deadnix: skip
       nix2container,
       flake-utils-plus,
+      treefmt-nix,
     }@inputs:
     let
-      inherit (flake-utils-plus.lib) exportOverlays exportPackages exportModules;
+      inherit (flake-utils-plus.lib) exportOverlays;
     in
     flake-utils-plus.lib.mkFlake {
 
@@ -44,8 +50,8 @@
         # cudaSupport = true;
       };
 
-      channels.nixpkgs.overlaysBuilder = channels: [
-        (final: prev: {
+      channels.nixpkgs.overlaysBuilder = _channels: [
+        (_final: _prev: {
         })
       ];
 
@@ -69,7 +75,7 @@
           pkgs = channels.nixpkgs;
           python = channels.nixpkgs.python312;
           pyPkgs = python.pkgs;
-          nix2containerPkgs = nix2container.packages.${pkgs.system};
+          treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
         in
         rec {
           packages = {
@@ -238,7 +244,7 @@
                 geoEnv
                 geomlEnv
                 geoxrEnv
-#                mlEnv
+                # mlEnv
                 otbEnv
                 stacEnv
                 xcubeEnv
@@ -256,12 +262,17 @@
             ];
             venvDir = "./.venv";
             # required environment for otbtf-gpu (otbtf build with cuda)
-#            postShellHook = ''
-#              export CUDA_PATH=${pkgs.cudatoolkit}
-#              export XLA_FLAGS="--xla_gpu_cuda_data_dir=${pkgs.cudatoolkit}"
-#              export LD_LIBRARY_PATH="${pkgs.cudatoolkit}/lib:${pkgs.cudatoolkit}/nvvm/libdevice:$LD_LIBRARY_PATH:/usr/lib/wsl/lib"
-#            '';
+            #            postShellHook = ''
+            #              export CUDA_PATH=${pkgs.cudatoolkit}
+            #              export XLA_FLAGS="--xla_gpu_cuda_data_dir=${pkgs.cudatoolkit}"
+            #              export LD_LIBRARY_PATH="${pkgs.cudatoolkit}/lib:${pkgs.cudatoolkit}/nvvm/libdevice:/run/opengl-driver/lib/$LD_LIBRARY_PATH"
+            #            '';
           };
+          # for `nix fmt`
+          formatter = treefmtEval.config.build.wrapper;
+          # for `nix flake check`
+          checks.formatting = treefmtEval.config.build.check self;
+
         };
     };
 }
