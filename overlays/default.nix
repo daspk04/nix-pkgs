@@ -30,6 +30,10 @@ final: prev: {
         doCheck = false;
       });
 
+      optuna-integration = pyFinal.callPackage ./optuna-integration/. {
+        optuna = pyFinal.optuna;
+      };
+
       otbtf = pyFinal.callPackage ./otbtf/. {
         keras = pyFinal.keras;
       };

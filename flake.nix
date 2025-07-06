@@ -80,6 +80,7 @@
               keras
               nebius
               optuna
+              optuna-integration
               otbtf
               prefect
               pyinterp
@@ -151,6 +152,7 @@
                 [
                   onnxruntime
                   optuna
+                  optuna-integration
                   ray
                   polars
                   pyarrow
