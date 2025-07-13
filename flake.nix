@@ -96,6 +96,7 @@
               torch
               torchvision
               tensorflow
+              tensorboard
               tqdm-loggable
               verde
               xcube
@@ -169,6 +170,7 @@
                   keras
                   torch
                   tensorflow
+                  tensorboard
                 ]);
             };
 

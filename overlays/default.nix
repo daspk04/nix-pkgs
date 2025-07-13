@@ -53,6 +53,15 @@ final: prev: {
         nebius = pyFinal.nebius;
       };
 
+      # `ImportError: cannot import name 'notf`
+      tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
+        postInstall = ''
+          ${oldAttrs.postInstall or ""}
+          substituteInPlace $out/${prev.python312.sitePackages}/tensorboard/compat/__init__.py \
+            --replace-fail 'from tensorboard.compat import notf  # noqa: F401' 'pass'
+        '';
+      });
+
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
         python = final.python312;
