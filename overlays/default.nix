@@ -40,6 +40,21 @@ final: prev: {
 
       prefect = pyFinal.callPackage ./prefect/. { };
 
+      # https://note.com/198619891990/n/na832c57019a2,
+      # https://github.com/protocolbuffers/protobuf/issues/11863#issuecomment-1433881846
+      protobuf = pyPrev.protobuf.overridePythonAttrs (oldAttrs: {
+        postInstall = (oldAttrs.postInstall or "") + ''
+          cat >> $out/lib/python*/site-packages/google/protobuf/message_factory.py << 'EOF'
+
+          # TensorFlow compatibility patch
+          if not hasattr(MessageFactory, 'GetPrototype'):
+              def GetPrototype(self, descriptor):
+                  return self.GetMessageClass(descriptor)
+              MessageFactory.GetPrototype = GetPrototype
+          EOF
+        '';
+      });
+
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
       pyinterp = pyFinal.callPackage ./pyinterp/. { };

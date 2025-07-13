@@ -89,6 +89,7 @@
               optuna-integration
               otbtf
               prefect
+              protobuf
               pyinterp
               pyotb
               runpod
@@ -168,6 +169,7 @@
                 ++ ray.optional-dependencies.air
                 ++ (with packages; [
                   keras
+                  protobuf
                   torch
                   tensorflow
                   tensorboard
