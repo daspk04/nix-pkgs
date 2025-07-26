@@ -70,6 +70,8 @@ final: prev: {
 
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
 
+      syne-tune = pyFinal.callPackage ./syne-tune/. { };
+
       # `ImportError: cannot import name 'notf`
       tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
         postInstall = ''

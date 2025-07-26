@@ -93,6 +93,7 @@
               runpod
               skypilot
               sqlalchemy-adapter
+              syne-tune
               torch
               torchvision
               tensorflow
@@ -164,6 +165,7 @@
                   polars
                   pyarrow
                   pytorch-lightning
+                  syne-tune
                 ]
                 ++ ray.optional-dependencies.air
                 ++ (with packages; [
