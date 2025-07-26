@@ -10,6 +10,18 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
+      autogluon = pyFinal.callPackage ./autogluon/. { };
+
+      autogluon-common = pyFinal.callPackage ./autogluon/common/. { };
+
+      autogluon-core = pyFinal.callPackage ./autogluon/core/. { };
+
+      autogluon-features = pyFinal.callPackage ./autogluon/features/. { };
+
+      autogluon-tabular = pyFinal.callPackage ./autogluon/tabular/. { };
+
+      autogluon-timeseries = pyFinal.callPackage ./autogluon/timeseries/. { };
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
       # fixes to avoid collision with dask-image-2024.5.3

@@ -81,6 +81,12 @@
           packages = {
             python = python;
             inherit (pyPkgs)
+#              autogluon
+              autogluon-core
+              autogluon-common
+              autogluon-features
+              autogluon-tabular
+#              autogluon-timeseries # broken
               cmocean
               google-auth-oauthlib
               keras
