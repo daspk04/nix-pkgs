@@ -68,6 +68,8 @@ final: prev: {
         nebius = pyFinal.nebius;
       };
 
+      syne-tune = pyFinal.callPackage ./syne-tune/. { };
+
       # `ImportError: cannot import name 'notf`
       tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
         postInstall = ''
