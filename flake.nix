@@ -79,9 +79,12 @@
           packages = {
             python = python;
             inherit (pyPkgs)
+              botorch
               cmocean
               google-auth-oauthlib
+              gpytorch
               keras
+              linear-operator
               nebius
               optuna
               optuna-integration
@@ -262,6 +265,7 @@
           devShells.default = pkgs.mkShell rec {
             packages = with pkgs; [
               bashInteractive
+              pyPkgs.aiohttp
               pyPkgs.python
               pyPkgs.venvShellHook
               skopeo

@@ -10,6 +10,10 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
+      botorch = pyPrev.botorch.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+      });
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
       # fixes to avoid collision with dask-image-2024.5.3
@@ -20,7 +24,15 @@ final: prev: {
         '';
       });
 
+      gpytorch = pyPrev.gpytorch.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+      });
+
       keras = pyPrev.keras.overridePythonAttrs (_oldAttrs: {
+        doCheck = false;
+      });
+
+      linear-operator = pyPrev.linear-operator.overridePythonAttrs (oldAttrs: {
         doCheck = false;
       });
 
