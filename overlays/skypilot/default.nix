@@ -12,6 +12,7 @@
   aiohttp,
   cachetools,
   click,
+  casbin,
   colorama,
   cryptography,
   fastapi,
@@ -22,11 +23,14 @@
   networkx,
   packaging,
   pandas,
+  passlib,
   pendulum,
   prettytable,
+  prometheus-client,
   psutil,
   psycopg2-binary,
   pydantic,
+  pyjwt,
   python-dotenv,
   pyyaml,
   python-multipart,
@@ -35,6 +39,7 @@
   rich,
   setproctitle,
   sqlalchemy,
+  sqlalchemy-adapter,
   tabulate,
   typing-extensions,
   uvicorn,
@@ -71,10 +76,10 @@
 }:
 buildPythonPackage rec {
   pname = "skypilot";
-  version = "0.9.3";
+  version = "0.10.0";
   src = fetchPypi {
     inherit version pname;
-    hash = "sha256-kIi0YHrOVXS4pzN5looDPOKf3JD2i/tO0H4E3uRoHuY=";
+    hash = "sha256-HOguSCe9YbmAqvZCiUHOeNIWH4DofmrxWoW8yDSCah8=";
   };
 
   # source doesn't have dashboard artifacts outputs needs to build them via npm
@@ -94,11 +99,13 @@ buildPythonPackage rec {
     setuptools-scm
   ];
 
+  # https://github.com/skypilot-org/skypilot/blob/master/sky/setup_files/dependencies.py
   dependencies =
     [
       aiohttp
       aiofiles
       cachetools
+      casbin
       click
       colorama
       cryptography
@@ -110,11 +117,14 @@ buildPythonPackage rec {
       networkx
       packaging
       pandas
+      passlib
       pendulum
       prettytable
+      prometheus-client
       psutil
       psycopg2-binary
       pydantic
+      pyjwt
       python-dotenv
       pyyaml
       python-multipart
@@ -123,6 +133,7 @@ buildPythonPackage rec {
       rich
       setproctitle
       sqlalchemy
+      sqlalchemy-adapter
       tabulate
       typing-extensions
       uvicorn
@@ -195,6 +206,13 @@ buildPythonPackage rec {
     ];
 
     runpod = [ runpod ];
+
+    server = [
+      casbin
+      passlib
+      pyjwt
+      sqlalchemy-adapter
+    ];
 
     scp = self.ray;
 
