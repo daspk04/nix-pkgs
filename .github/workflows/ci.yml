@@ -27,6 +27,8 @@ jobs:
             fallback = true
             http-connections = 128
             max-substitution-jobs = 128
+            substituters = https://nix-community.cachix.org
+            trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
             ${{ matrix.system == 'aarch64-linux' && 'extra-sandbox-paths = /sys/devices/system/cpu=/sys/devices/system/cpu /proc/cpuinfo=/proc/cpuinfo' || '' }}
       - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: nix build
