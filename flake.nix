@@ -85,6 +85,7 @@
               nebius
               optuna
               optuna-integration
+              optunahub
               otbtf
               prefect
               protobuf
@@ -160,6 +161,7 @@
                   onnxruntime
                   optuna
                   optuna-integration
+                  optunahub
                   ray
                   polars
                   pyarrow

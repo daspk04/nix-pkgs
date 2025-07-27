@@ -34,6 +34,8 @@ final: prev: {
         optuna = pyFinal.optuna;
       };
 
+      optunahub = pyFinal.callPackage ./optunahub/. { };
+
       otbtf = pyFinal.callPackage ./otbtf/. {
         keras = pyFinal.keras;
       };
