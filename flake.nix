@@ -94,6 +94,7 @@
               pyotb
               runpod
               skypilot
+              sqlalchemy-adapter
               torch
               torchvision
               tensorflow
