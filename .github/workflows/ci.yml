@@ -28,5 +28,6 @@ jobs:
             http-connections = 128
             max-substitution-jobs = 128
             ${{ matrix.system == 'aarch64-linux' && 'extra-sandbox-paths = /sys/devices/system/cpu=/sys/devices/system/cpu /proc/cpuinfo=/proc/cpuinfo' || '' }}
+      - uses: DeterminateSystems/magic-nix-cache-action@main
       - name: nix build
         run: nix build --keep-going -L --system ${{ matrix.system }} .\#allPkgsEnv
