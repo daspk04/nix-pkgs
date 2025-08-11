@@ -18,26 +18,9 @@ jobs:
       ${{ (matrix.system == 'x86_64-linux' && 'ubuntu-latest') || (matrix.system == 'aarch64-linux' && 'ubuntu-24.04-arm') }}
     steps:
       - uses: actions/checkout@v4
-      - name: reclaim space (linux)
-        if: runner.os == 'Linux'
-        uses: wimpysworld/nothing-but-nix@main
         with:
-          hatchet-protocol: rampage
-      - name: prepare /nix
-        run: sudo mkdir /mnt/nix && sudo mount -m -o bind /mnt/nix /nix
-      - name: install nix
-        uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            build-dir = /nix/build
-            fallback = true
-            http-connections = 128
-            max-substitution-jobs = 128
-            substituters = https://nix-community.cachix.org
-            trusted-public-keys = nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
-            ${{ matrix.system == 'aarch64-linux' && 'extra-sandbox-paths = /sys/devices/system/cpu=/sys/devices/system/cpu /proc/cpuinfo=/proc/cpuinfo' || '' }}
-      - name: create build-dir
-        shell: bash
-        run: sudo mkdir -p /nix/build
+          sparse-checkout: .github/actions
+      - name: setup nix
+        uses: ./.github/actions/setup-nix
       - name: nix build
         run: nix build --keep-going -L --system ${{ matrix.system }} .\#allPkgsEnv
