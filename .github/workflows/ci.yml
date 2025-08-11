@@ -22,5 +22,7 @@ jobs:
           sparse-checkout: .github/actions
       - name: setup nix
         uses: ./.github/actions/setup-nix
+      - name: clone repo
+        uses: actions/checkout@v4
       - name: nix build
         run: nix build --keep-going -L --system ${{ matrix.system }} .\#allPkgsEnv
