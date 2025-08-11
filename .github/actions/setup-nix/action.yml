@@ -7,7 +7,7 @@ runs:
       if: runner.os == 'Linux'
       uses: wimpysworld/nothing-but-nix@main
       with:
-        hatchet-protocol: rampage
+        hatchet-protocol: cleave
         nix-permission-edict: true
 
     - name: install nix
