@@ -10,6 +10,7 @@
   # dependencies
   aiofiles,
   aiohttp,
+  alembic,
   cachetools,
   click,
   casbin,
@@ -76,10 +77,10 @@
 }:
 buildPythonPackage rec {
   pname = "skypilot";
-  version = "0.10.0";
+  version = "0.10.2";
   src = fetchPypi {
     inherit version pname;
-    hash = "sha256-HOguSCe9YbmAqvZCiUHOeNIWH4DofmrxWoW8yDSCah8=";
+    hash = "sha256-2IH6sWuMSfgCmRmN4GdE+MiBpFVeE23Ztnap8AqkRbk=";
   };
 
   # source doesn't have dashboard artifacts outputs needs to build them via npm
@@ -104,6 +105,7 @@ buildPythonPackage rec {
     [
       aiohttp
       aiofiles
+      alembic
       cachetools
       casbin
       click
