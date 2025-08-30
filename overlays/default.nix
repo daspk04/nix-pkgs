@@ -10,6 +10,10 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
+      botorch = pyPrev.botorch.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+      });
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
       # fixes to avoid collision with dask-image-2024.5.3
@@ -20,7 +24,15 @@ final: prev: {
         '';
       });
 
+      gpytorch = pyPrev.gpytorch.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+      });
+
       keras = pyPrev.keras.overridePythonAttrs (_oldAttrs: {
+        doCheck = false;
+      });
+
+      linear-operator = pyPrev.linear-operator.overridePythonAttrs (oldAttrs: {
         doCheck = false;
       });
 
@@ -34,6 +46,8 @@ final: prev: {
         optuna = pyFinal.optuna;
       };
 
+      optunahub = pyFinal.callPackage ./optunahub/. { };
+
       otbtf = pyFinal.callPackage ./otbtf/. {
         keras = pyFinal.keras;
       };
@@ -43,14 +57,14 @@ final: prev: {
       # https://note.com/198619891990/n/na832c57019a2,
       # https://github.com/protocolbuffers/protobuf/issues/11863#issuecomment-1433881846
       protobuf = pyPrev.protobuf.overridePythonAttrs (oldAttrs: {
-        postInstall = (oldAttrs.postInstall or "") + ''
+        postInstall = ''
+          ${oldAttrs.postInstall or ""}
           cat >> $out/lib/python*/site-packages/google/protobuf/message_factory.py << 'EOF'
-
           # TensorFlow compatibility patch
           if not hasattr(MessageFactory, 'GetPrototype'):
-              def GetPrototype(self, descriptor):
-                  return self.GetMessageClass(descriptor)
-              MessageFactory.GetPrototype = GetPrototype
+             def GetPrototype(self, descriptor):
+                 return self.GetMessageClass(descriptor)
+             MessageFactory.GetPrototype = GetPrototype
           EOF
         '';
       });
@@ -67,6 +81,10 @@ final: prev: {
         runpod = pyFinal.runpod;
         nebius = pyFinal.nebius;
       };
+
+      sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
+
+      syne-tune = pyFinal.callPackage ./syne-tune/. { };
 
       # `ImportError: cannot import name 'notf`
       tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {

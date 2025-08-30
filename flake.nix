@@ -3,11 +3,9 @@
 
   nixConfig = {
     extra-substituters = [
-      "https://cuda-maintainers.cachix.org"
       "https://nix-community.cachix.org"
     ];
     extra-trusted-public-keys = [
-      "cuda-maintainers.cachix.org-1:0dq3bujKpuEPMCX6U4WylrUDZ9JyUG0VpVZa7CNfq5E="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
@@ -81,12 +79,16 @@
           packages = {
             python = python;
             inherit (pyPkgs)
+              botorch
               cmocean
               google-auth-oauthlib
+              gpytorch
               keras
+              linear-operator
               nebius
               optuna
               optuna-integration
+              optunahub
               otbtf
               prefect
               protobuf
@@ -94,6 +96,8 @@
               pyotb
               runpod
               skypilot
+              sqlalchemy-adapter
+              syne-tune
               torch
               torchvision
               tensorflow
@@ -161,10 +165,12 @@
                   onnxruntime
                   optuna
                   optuna-integration
+                  optunahub
                   ray
                   polars
                   pyarrow
                   pytorch-lightning
+                  syne-tune
                 ]
                 ++ ray.optional-dependencies.air
                 ++ (with packages; [
@@ -259,6 +265,7 @@
           devShells.default = pkgs.mkShell rec {
             packages = with pkgs; [
               bashInteractive
+              pyPkgs.aiohttp
               pyPkgs.python
               pyPkgs.venvShellHook
               skopeo

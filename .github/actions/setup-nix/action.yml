@@ -1,0 +1,26 @@
+name: setup-nix
+
+runs:
+  using: composite
+  steps:
+    - name: reclaim space (linux)
+      if: runner.os == 'Linux'
+      uses: wimpysworld/nothing-but-nix@main
+      with:
+        hatchet-protocol: rampage
+        nix-permission-edict: true
+
+    - name: install nix
+      uses: cachix/install-nix-action@v31
+      with:
+        extra_nix_config: |
+          build-dir = /nix/build
+          fallback = true
+          http-connections = 128
+          max-substitution-jobs = 128
+          substituters = https://cache.nixos.org/ https://nix-community.cachix.org
+          trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+          ${{ matrix.system == 'aarch64-linux' && 'extra-sandbox-paths = /sys/devices/system/cpu=/sys/devices/system/cpu /proc/cpuinfo=/proc/cpuinfo' || '' }}
+    - name: create build-dir
+      shell: bash
+      run: sudo mkdir -p /nix/build
