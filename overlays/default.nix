@@ -100,6 +100,8 @@ final: prev: {
         python = final.python312;
       };
 
+      tetra-rp = pyFinal.callPackage ./tetra-rp/. { };
+
       torch = pyFinal.torch-bin;
 
       torchvision = pyFinal.torchvision-bin;
