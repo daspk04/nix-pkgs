@@ -13,7 +13,7 @@
 }:
 buildPythonPackage rec {
   pname = "tetra-rp";
-  version = "0.11.0";
+  version = "0.12.0";
   pyproject = true;
   docheck = false;
 
@@ -21,7 +21,7 @@ buildPythonPackage rec {
     owner = "runpod";
     repo = "tetra-rp";
     tag = "v${version}";
-    hash = "sha256-ZwdOKSrTGX4QFqMETAu7y68YTUCzeRhlPF8fS+Sv3U8=";
+    hash = "sha256-I/xPo0ciHnja+M5592Y/wmrfQWsUwBfvU418IDCeHfI=";
   };
 
   build-system = [
