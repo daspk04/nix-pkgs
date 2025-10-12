@@ -6,14 +6,17 @@
   setuptools,
 
   cloudpickle,
+  rich,
   runpod,
   pydantic,
   python-dotenv,
+  questionary,
+  typer,
   ...
 }:
 buildPythonPackage rec {
   pname = "tetra-rp";
-  version = "0.12.0";
+  version = "0.13.0";
   pyproject = true;
   docheck = false;
 
@@ -21,7 +24,7 @@ buildPythonPackage rec {
     owner = "runpod";
     repo = "tetra-rp";
     tag = "v${version}";
-    hash = "sha256-I/xPo0ciHnja+M5592Y/wmrfQWsUwBfvU418IDCeHfI=";
+    hash = "sha256-BgHFjcLJgbmqP5kN08c2ttQjMvR0UJHcJJRlP3Z8RqY=";
   };
 
   build-system = [
@@ -30,9 +33,12 @@ buildPythonPackage rec {
 
   dependencies = [
     cloudpickle
+    rich
     runpod
     pydantic
     python-dotenv
+    questionary
+    typer
   ];
 
   pythonImportsCheck = [
