@@ -71,7 +71,7 @@
         channels:
         let
           pkgs = channels.nixpkgs;
-          python = channels.nixpkgs.python312;
+          python = channels.nixpkgs.python313;
           pyPkgs = python.pkgs;
           treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
         in
