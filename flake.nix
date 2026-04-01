@@ -86,6 +86,7 @@
               keras
               linear-operator
               nebius
+              notebooklm-py
               optuna
               optuna-integration
               optunahub
@@ -155,6 +156,13 @@
               paths = [
                 packages.verde
                 packages.pyinterp
+              ];
+            };
+
+            llmEnv = pkgs.buildEnv {
+               name= "llm-env";
+              paths = [
+                packages.notebooklm-py
               ];
             };
 
@@ -255,6 +263,7 @@
                 geoEnv
                 geomlEnv
                 geoxrEnv
+                llmEnv
                 # mlEnv
                 otbEnv
                 stacEnv
