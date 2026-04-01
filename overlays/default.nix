@@ -1,6 +1,6 @@
 final: prev: {
   otb = final.callPackage ./otb/. {
-    python3 = final.python312;
+    python3 = final.python313;
     enablePython = true;
     otb = prev.otb;
   };
@@ -17,12 +17,12 @@ final: prev: {
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
       # fixes to avoid collision with dask-image-2024.5.3
-      google-auth-oauthlib = pyPrev.google-auth-oauthlib.overridePythonAttrs (oldAttrs: {
-        postInstall = ''
-          ${oldAttrs.postInstall or ""}
-          rm -rf $out/${prev.python312.sitePackages}/docs/*
-        '';
-      });
+#      google-auth-oauthlib = pyPrev.google-auth-oauthlib.overridePythonAttrs (oldAttrs: {
+#        postInstall = ''
+#          ${oldAttrs.postInstall or ""}
+#          rm -rf $out/${prev.python313.sitePackages}/docs/*
+#        '';
+#      });
 
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (oldAttrs: {
         doCheck = false;
@@ -56,18 +56,18 @@ final: prev: {
 
       # https://note.com/198619891990/n/na832c57019a2,
       # https://github.com/protocolbuffers/protobuf/issues/11863#issuecomment-1433881846
-      protobuf = pyPrev.protobuf.overridePythonAttrs (oldAttrs: {
-        postInstall = ''
-          ${oldAttrs.postInstall or ""}
-          cat >> $out/lib/python*/site-packages/google/protobuf/message_factory.py << 'EOF'
-          # TensorFlow compatibility patch
-          if not hasattr(MessageFactory, 'GetPrototype'):
-             def GetPrototype(self, descriptor):
-                 return self.GetMessageClass(descriptor)
-             MessageFactory.GetPrototype = GetPrototype
-          EOF
-        '';
-      });
+#      protobuf = pyPrev.protobuf.overridePythonAttrs (oldAttrs: {
+#        postInstall = ''
+#          ${oldAttrs.postInstall or ""}
+#          cat >> $out/lib/python*/site-packages/google/protobuf/message_factory.py << 'EOF'
+#          # TensorFlow compatibility patch
+#          if not hasattr(MessageFactory, 'GetPrototype'):
+#             def GetPrototype(self, descriptor):
+#                 return self.GetMessageClass(descriptor)
+#             MessageFactory.GetPrototype = GetPrototype
+#          EOF
+#        '';
+#      });
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
@@ -87,17 +87,17 @@ final: prev: {
       syne-tune = pyFinal.callPackage ./syne-tune/. { };
 
       # `ImportError: cannot import name 'notf`
-      tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
-        postInstall = ''
-          ${oldAttrs.postInstall or ""}
-          substituteInPlace $out/${prev.python312.sitePackages}/tensorboard/compat/__init__.py \
-            --replace-fail 'from tensorboard.compat import notf  # noqa: F401' 'pass'
-        '';
-      });
+#      tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
+#        postInstall = ''
+#          ${oldAttrs.postInstall or ""}
+#          substituteInPlace $out/${prev.python312.sitePackages}/tensorboard/compat/__init__.py \
+#            --replace-fail 'from tensorboard.compat import notf  # noqa: F401' 'pass'
+#        '';
+#      });
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
-        python = final.python312;
+        python = final.python313;
       };
 
       tetra-rp = pyFinal.callPackage ./tetra-rp/. { };
