@@ -28,7 +28,7 @@
 }:
 buildPythonPackage rec {
   pname = "runpod";
-  version = "1.7.10";
+  version = "1.7.12";
   format = "pyproject";
   docheck = false;
 
@@ -36,7 +36,7 @@ buildPythonPackage rec {
     owner = "runpod";
     repo = "runpod-python";
     tag = version;
-    hash = "sha256-33gYS7DcHvj3k++HK7HsaGZaD+Ttx2g5VPB8s7/IZD0=";
+    hash = "sha256-ZHjetHmmZTImcaxULsUg8oA9Oq8nFRNN1g3G0XfriS8=";
   };
 
   build-system = [

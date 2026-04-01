@@ -101,6 +101,7 @@
               torch
               torchvision
               tensorflow
+              tetra-rp
               tensorboard
               tqdm-loggable
               verde
