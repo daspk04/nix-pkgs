@@ -8,6 +8,9 @@ let
     "2.19.0" = {
       gitHash = "sha256-61Ceoed8D65IvipM0OsXJ3xGWi5jtUDPUxhYNOffImU=";
     };
+    "2.20.0" = {
+      gitHash = "sha256-nGWQ+T5FmL+hZucbjQlCRTJM1i//gSzua1QxcBFeqwM=";
+    };
   };
 in
 builtins.getAttr version hashes
