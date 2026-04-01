@@ -38,6 +38,8 @@ final: prev: {
 
       nebius = pyFinal.callPackage ./nebius/. { };
 
+      notebooklm-py = pyFinal.callPackage ./notebooklm-py/. { };
+
       optuna = pyPrev.optuna.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
