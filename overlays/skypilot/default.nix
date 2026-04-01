@@ -79,6 +79,7 @@
 buildPythonPackage rec {
   pname = "skypilot";
   version = "0.10.3.post1";
+  pyproject = true;
   src = fetchPypi {
     inherit version pname;
     hash = "sha256-SawrxpwCTlK8R70SRyEbGd0wXwt9X1dt7db+Z/kNaQU=";
