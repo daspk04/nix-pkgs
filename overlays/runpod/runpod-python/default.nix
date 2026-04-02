@@ -2,6 +2,7 @@
   lib,
   fetchFromGitHub,
   buildPythonPackage,
+  pythonRelaxDepsHook,
 
   setuptools,
   setuptools-scm,
@@ -67,6 +68,8 @@ buildPythonPackage rec {
     ]
     ++ aiohttp.optional-dependencies.speedups
     ++ fastapi.optional-dependencies.all;
+
+  pythonRelaxDeps = [ "cryptography" ];
 
   pythonImportsCheck = [
     "runpod"
