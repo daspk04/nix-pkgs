@@ -2,6 +2,7 @@
   lib,
   fetchFromGitHub,
   buildPythonPackage,
+  pythonRelaxDepsHook,
 
   hatchling,
 
@@ -62,6 +63,7 @@
   uv,
   uvicorn,
   websockets,
+  whenever,
   ...
 }:
 buildPythonPackage rec {
@@ -166,10 +168,13 @@ buildPythonPackage rec {
       uv
       uvicorn
       websockets
+      whenever
     ]
     ++ httpx.optional-dependencies.http2
     ++ python-socks.optional-dependencies.asyncio
     ++ sqlalchemy.optional-dependencies.asyncio;
+
+  pythonRelaxDeps = [ "click" "typer" ];
 
   versionCheckProgramArg = "--version";
 

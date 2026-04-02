@@ -2,6 +2,7 @@
   lib,
   fetchPypi,
   buildPythonPackage,
+  pythonRelaxDepsHook,
 
   setuptools,
   setuptools-scm,
@@ -12,25 +13,29 @@
   aiohttp,
   aiosqlite,
   alembic,
+  bcrypt,
   cachetools,
   click,
-  casbin,
   colorama,
   cryptography,
   fastapi,
   filelock,
+  gitpython,
   httpx,
   jinja2,
   jsonschema,
   networkx,
   packaging,
+  paramiko,
   pandas,
   passlib,
   pendulum,
+  pip,
   prettytable,
   prometheus-client,
   psutil,
   psycopg2-binary,
+  pycasbin,
   pydantic,
   pyjwt,
   python-dotenv,
@@ -43,6 +48,7 @@
   sqlalchemy,
   sqlalchemy-adapter,
   tabulate,
+  types-paramiko,
   typing-extensions,
   uvicorn,
   wheel,
@@ -102,6 +108,11 @@ buildPythonPackage rec {
     setuptools-scm
   ];
 
+  postPatch = ''
+    sed -i 's/casbin/pycasbin/g' sky/setup_files/dependencies.py
+    sed -i 's/types-paramiko/#types-paramiko/g' sky/setup_files/dependencies.py
+  '';
+
   # https://github.com/skypilot-org/skypilot/blob/master/sky/setup_files/dependencies.py
   dependencies =
     [
@@ -109,13 +120,14 @@ buildPythonPackage rec {
       aiofiles
       aiosqlite
       alembic
+      bcrypt
       cachetools
-      casbin
       click
       colorama
       cryptography
       filelock
       fastapi
+      gitpython
       httpx
       jinja2
       jsonschema
@@ -124,10 +136,12 @@ buildPythonPackage rec {
       pandas
       passlib
       pendulum
+      pip
       prettytable
       prometheus-client
       psutil
       psycopg2-binary
+      pycasbin
       pydantic
       pyjwt
       python-dotenv
@@ -140,6 +154,7 @@ buildPythonPackage rec {
       sqlalchemy
       sqlalchemy-adapter
       tabulate
+      types-paramiko
       typing-extensions
       uvicorn
       wheel
@@ -213,7 +228,7 @@ buildPythonPackage rec {
     runpod = [ runpod ];
 
     server = [
-      casbin
+      pycasbin
       passlib
       pyjwt
       sqlalchemy-adapter
@@ -234,6 +249,8 @@ buildPythonPackage rec {
   pythonImportsCheck = [
     "sky"
   ];
+
+  pythonRelaxDeps = true;
 
   versionCheckProgramArg = "--version";
 

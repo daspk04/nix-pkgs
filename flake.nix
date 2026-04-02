@@ -103,6 +103,7 @@
               tetra-rp
               tensorboard
               tqdm-loggable
+              types-paramiko
               verde
               xcube
               xcube-sh
@@ -134,14 +135,6 @@
               ];
             };
 
-            collisionEnv = pkgs.buildEnv {
-              name = "collision-env";
-              paths = [
-                pyPkgs.dask-image
-                packages.google-auth-oauthlib
-              ];
-            };
-
             geoEnv = pkgs.buildEnv {
               name = "geo-env";
               paths = [ pyPkgs.gdal ];
@@ -151,7 +144,7 @@
               name = "geoml-env";
               paths = [
                 packages.verde
-              ] (with pyPkgs; [ pyinterp ]);
+              ] ++ (with pyPkgs; [ pyinterp ]);
             };
 
             llmEnv = pkgs.buildEnv {
@@ -253,7 +246,6 @@
               name = "allPkgs-env";
               paths = with packages; [
                 cloudEnv
-                collisionEnv
                 coiledEnv
                 geoEnv
                 geomlEnv

@@ -14,14 +14,6 @@ final: prev: {
 
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
-      # fixes to avoid collision with dask-image-2024.5.3
-#      google-auth-oauthlib = pyPrev.google-auth-oauthlib.overridePythonAttrs (oldAttrs: {
-#        postInstall = ''
-#          ${oldAttrs.postInstall or ""}
-#          rm -rf $out/${prev.python313.sitePackages}/docs/*
-#        '';
-#      });
-
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (oldAttrs: {
         doCheck = false;
       });
@@ -54,21 +46,6 @@ final: prev: {
 
       prefect = pyFinal.callPackage ./prefect/. { };
 
-      # https://note.com/198619891990/n/na832c57019a2,
-      # https://github.com/protocolbuffers/protobuf/issues/11863#issuecomment-1433881846
-#      protobuf = pyPrev.protobuf.overridePythonAttrs (oldAttrs: {
-#        postInstall = ''
-#          ${oldAttrs.postInstall or ""}
-#          cat >> $out/lib/python*/site-packages/google/protobuf/message_factory.py << 'EOF'
-#          # TensorFlow compatibility patch
-#          if not hasattr(MessageFactory, 'GetPrototype'):
-#             def GetPrototype(self, descriptor):
-#                 return self.GetMessageClass(descriptor)
-#             MessageFactory.GetPrototype = GetPrototype
-#          EOF
-#        '';
-#      });
-
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
       runpod = pyFinal.callPackage ./runpod/runpod-python/. {
@@ -82,15 +59,6 @@ final: prev: {
 
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
 
-      # `ImportError: cannot import name 'notf`
-#      tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
-#        postInstall = ''
-#          ${oldAttrs.postInstall or ""}
-#          substituteInPlace $out/${prev.python312.sitePackages}/tensorboard/compat/__init__.py \
-#            --replace-fail 'from tensorboard.compat import notf  # noqa: F401' 'pass'
-#        '';
-#      });
-
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
         python = final.python313;
@@ -103,6 +71,8 @@ final: prev: {
       torchvision = pyFinal.torchvision-bin;
 
       tqdm-loggable = pyFinal.callPackage ./tqdm-loggable/. { };
+
+      types-paramiko = pyFinal.callPackage ./types-paramiko/. { };
 
       verde = pyFinal.callPackage ./verde/. { };
 
