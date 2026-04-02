@@ -117,7 +117,8 @@
               paths = [
                 packages.runpod
                 packages.skypilot
-              ] ++ (with pkgs; [ runpodctl ]);
+              ]
+              ++ (with pkgs; [ runpodctl ]);
             };
 
             coiledEnv = pkgs.buildEnv {
@@ -144,11 +145,12 @@
               name = "geoml-env";
               paths = [
                 packages.verde
-              ] ++ (with pyPkgs; [ pyinterp ]);
+              ]
+              ++ (with pyPkgs; [ pyinterp ]);
             };
 
             llmEnv = pkgs.buildEnv {
-               name= "llm-env";
+              name = "llm-env";
               paths = [
                 packages.notebooklm-py
               ];
