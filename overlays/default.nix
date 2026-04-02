@@ -8,13 +8,13 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
-      botorch = pyPrev.botorch.overridePythonAttrs (oldAttrs: {
+      botorch = pyPrev.botorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
 
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
-      gpytorch = pyPrev.gpytorch.overridePythonAttrs (oldAttrs: {
+      gpytorch = pyPrev.gpytorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
 
@@ -22,7 +22,7 @@ final: prev: {
         doCheck = false;
       });
 
-      linear-operator = pyPrev.linear-operator.overridePythonAttrs (oldAttrs: {
+      linear-operator = pyPrev.linear-operator.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
 

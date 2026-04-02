@@ -2,7 +2,6 @@
   lib,
   fetchFromGitHub,
   buildPythonPackage,
-  pythonRelaxDepsHook,
 
   hatchling,
 
@@ -109,72 +108,74 @@ buildPythonPackage rec {
   '';
 
   # https://github.com/conda-forge/prefect-feedstock/blob/main/recipe/meta.yaml
-  dependencies =
-    [
-      aiosqlite
-      alembic
-      anyio
-      apprise
-      asgi-lifespan
-      asyncpg
-      cachetools
-      click
-      cloudpickle
-      coolname
-      croniter
-      cryptography
-      dateparser
-      docker
-      exceptiongroup
-      fastapi
-      fsspec
-      graphviz
-      griffe
-      httpcore
-      httpx
-      humanize
-      importlib-metadata
-      jinja2
-      jinja2-humanize-extension
-      jsonpatch
-      jsonschema
-      opentelemetry-api
-      orjson
-      packaging
-      pathspec
-      pendulum
-      prometheus-client
-      pydantic
-      pydantic-core
-      pydantic-extra-types
-      pydantic-settings
-      python-slugify
-      python-dateutil
-      python-socks
-      pytz
-      pyyaml
-      readchar
-      rfc3339-validator
-      rich
-      ruamel-yaml
-      sniffio
-      sqlalchemy
-      starlette
-      toml
-      typer
-      typing-extensions
-      tzdata
-      ujson
-      uv
-      uvicorn
-      websockets
-      whenever
-    ]
-    ++ httpx.optional-dependencies.http2
-    ++ python-socks.optional-dependencies.asyncio
-    ++ sqlalchemy.optional-dependencies.asyncio;
+  dependencies = [
+    aiosqlite
+    alembic
+    anyio
+    apprise
+    asgi-lifespan
+    asyncpg
+    cachetools
+    click
+    cloudpickle
+    coolname
+    croniter
+    cryptography
+    dateparser
+    docker
+    exceptiongroup
+    fastapi
+    fsspec
+    graphviz
+    griffe
+    httpcore
+    httpx
+    humanize
+    importlib-metadata
+    jinja2
+    jinja2-humanize-extension
+    jsonpatch
+    jsonschema
+    opentelemetry-api
+    orjson
+    packaging
+    pathspec
+    pendulum
+    prometheus-client
+    pydantic
+    pydantic-core
+    pydantic-extra-types
+    pydantic-settings
+    python-slugify
+    python-dateutil
+    python-socks
+    pytz
+    pyyaml
+    readchar
+    rfc3339-validator
+    rich
+    ruamel-yaml
+    sniffio
+    sqlalchemy
+    starlette
+    toml
+    typer
+    typing-extensions
+    tzdata
+    ujson
+    uv
+    uvicorn
+    websockets
+    whenever
+  ]
+  ++ httpx.optional-dependencies.http2
+  ++ python-socks.optional-dependencies.asyncio
+  ++ sqlalchemy.optional-dependencies.asyncio;
 
-  pythonRelaxDeps = [ "click" "typer" ];
+  pythonRelaxDeps = [
+    "click"
+    "typer"
+  ];
 
   versionCheckProgramArg = "--version";
 

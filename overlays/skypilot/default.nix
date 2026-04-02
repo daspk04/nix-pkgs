@@ -2,7 +2,6 @@
   lib,
   fetchPypi,
   buildPythonPackage,
-  pythonRelaxDepsHook,
 
   setuptools,
   setuptools-scm,
@@ -26,7 +25,6 @@
   jsonschema,
   networkx,
   packaging,
-  paramiko,
   pandas,
   passlib,
   pendulum,
@@ -114,54 +112,53 @@ buildPythonPackage rec {
   '';
 
   # https://github.com/skypilot-org/skypilot/blob/master/sky/setup_files/dependencies.py
-  dependencies =
-    [
-      aiohttp
-      aiofiles
-      aiosqlite
-      alembic
-      bcrypt
-      cachetools
-      click
-      colorama
-      cryptography
-      filelock
-      fastapi
-      gitpython
-      httpx
-      jinja2
-      jsonschema
-      networkx
-      packaging
-      pandas
-      passlib
-      pendulum
-      pip
-      prettytable
-      prometheus-client
-      psutil
-      psycopg2-binary
-      pycasbin
-      pydantic
-      pyjwt
-      python-dotenv
-      pyyaml
-      python-multipart
-      pulp
-      requests
-      rich
-      setproctitle
-      sqlalchemy
-      sqlalchemy-adapter
-      tabulate
-      types-paramiko
-      typing-extensions
-      uvicorn
-      wheel
-    ]
-    ++ aiohttp.optional-dependencies.speedups
-    ++ fastapi.optional-dependencies.all
-    ++ uvicorn.optional-dependencies.standard;
+  dependencies = [
+    aiohttp
+    aiofiles
+    aiosqlite
+    alembic
+    bcrypt
+    cachetools
+    click
+    colorama
+    cryptography
+    filelock
+    fastapi
+    gitpython
+    httpx
+    jinja2
+    jsonschema
+    networkx
+    packaging
+    pandas
+    passlib
+    pendulum
+    pip
+    prettytable
+    prometheus-client
+    psutil
+    psycopg2-binary
+    pycasbin
+    pydantic
+    pyjwt
+    python-dotenv
+    pyyaml
+    python-multipart
+    pulp
+    requests
+    rich
+    setproctitle
+    sqlalchemy
+    sqlalchemy-adapter
+    tabulate
+    types-paramiko
+    typing-extensions
+    uvicorn
+    wheel
+  ]
+  ++ aiohttp.optional-dependencies.speedups
+  ++ fastapi.optional-dependencies.all
+  ++ uvicorn.optional-dependencies.standard;
 
   optional-dependencies = lib.fix (self: {
 
@@ -180,7 +177,8 @@ buildPythonPackage rec {
       azure-mgmt-network
       azure-storage-blob
       msgraph-sdk
-    ] ++ self.ray;
+    ]
+    ++ self.ray;
 
     cloudfare = self.aws;
 
@@ -203,7 +201,8 @@ buildPythonPackage rec {
       #      ibm-cos-sdk
       #      ibm-platform-services
       #      ibm-vpc
-    ] ++ self.ray;
+    ]
+    ++ self.ray;
 
     kubernetes = [
       kubernetes
@@ -214,7 +213,8 @@ buildPythonPackage rec {
 
     nebius = [
       nebius
-    ] ++ self.aws;
+    ]
+    ++ self.aws;
 
     paperspace = [ ];
 

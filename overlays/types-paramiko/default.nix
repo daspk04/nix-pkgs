@@ -29,7 +29,6 @@ buildPythonPackage rec {
     cryptography
   ];
 
-
   meta = {
     description = "Typing stubs for paramiko";
     license = lib.licenses.asl20;

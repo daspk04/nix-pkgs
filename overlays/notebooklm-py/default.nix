@@ -42,7 +42,7 @@ buildPythonPackage rec {
   ]
   ++ optional-dependencies.browser;
 
-  optional-dependencies = lib.fix (self: {
+  optional-dependencies = lib.fix (_self: {
     browser = [
       playwright
       playwright-driver.browsers

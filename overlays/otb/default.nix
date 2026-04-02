@@ -206,7 +206,6 @@ in
         onnxruntime.dev
       ];
     propagatedBuildInputs =
-      (oldAttrs.propagatedBuildInputs or [ ])
-      ++ optionals enableTf [ tensorflow ];
+      (oldAttrs.propagatedBuildInputs or [ ]) ++ optionals enableTf [ tensorflow ];
 
   })
