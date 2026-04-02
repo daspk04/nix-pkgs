@@ -93,12 +93,10 @@
               otbtf
               prefect
               protobuf
-              pyinterp
               pyotb
               runpod
               skypilot
               sqlalchemy-adapter
-              syne-tune
               torch
               torchvision
               tensorflow
@@ -111,16 +109,14 @@
               ;
             inherit (pkgs)
               otb
-              runpodctl
               ;
 
             cloudEnv = pkgs.buildEnv {
               name = "cloudEnv";
               paths = [
                 packages.runpod
-                packages.runpodctl
                 packages.skypilot
-              ];
+              ] ++ (with pkgs; [ runpodctl ]);
             };
 
             coiledEnv = pkgs.buildEnv {
@@ -155,8 +151,7 @@
               name = "geoml-env";
               paths = [
                 packages.verde
-                packages.pyinterp
-              ];
+              ] (with pyPkgs; [ pyinterp ]);
             };
 
             llmEnv = pkgs.buildEnv {

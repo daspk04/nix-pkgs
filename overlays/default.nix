@@ -5,8 +5,6 @@ final: prev: {
     otb = prev.otb;
   };
 
-  runpodctl = final.callPackage ./runpod/runpodctl/. { };
-
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
@@ -73,8 +71,6 @@ final: prev: {
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
-      pyinterp = pyFinal.callPackage ./pyinterp/. { };
-
       runpod = pyFinal.callPackage ./runpod/runpod-python/. {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
@@ -85,8 +81,6 @@ final: prev: {
       };
 
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
-
-      syne-tune = pyFinal.callPackage ./syne-tune/. { };
 
       # `ImportError: cannot import name 'notf`
 #      tensorboard = pyPrev.tensorboard.overridePythonAttrs (oldAttrs: {
