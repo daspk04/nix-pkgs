@@ -245,8 +245,11 @@
               name = "misc-env";
               paths = with pyPkgs; [
                 rclone-python
+              ] ++ (with packages; [
+                 optunahub
+                 optuna-integration
 #                skorch
-              ];
+                ]);
             };
 
             allPkgsEnv = pkgs.buildEnv {
