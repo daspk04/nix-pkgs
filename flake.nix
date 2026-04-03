@@ -11,7 +11,7 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils-plus = {
       url = "github:gytis-ivaskevicius/flake-utils-plus";
@@ -28,6 +28,7 @@
   outputs =
     {
       self,
+      # deadnix: skip
       nixpkgs,
       # deadnix: skip
       nixpkgs-unstable,
@@ -71,7 +72,7 @@
         channels:
         let
           pkgs = channels.nixpkgs;
-          python = channels.nixpkgs.python312;
+          python = channels.nixpkgs.python313;
           pyPkgs = python.pkgs;
           treefmtEval = treefmt-nix.lib.evalModule pkgs ./treefmt.nix;
         in
@@ -86,40 +87,40 @@
               keras
               linear-operator
               nebius
+              notebooklm-py
               optuna
               optuna-integration
               optunahub
               otbtf
               prefect
               protobuf
-              pyinterp
               pyotb
               runpod
+              skorch
               skypilot
               sqlalchemy-adapter
-              syne-tune
               torch
               torchvision
               tensorflow
               tetra-rp
               tensorboard
               tqdm-loggable
+              types-paramiko
               verde
               xcube
               xcube-sh
               ;
             inherit (pkgs)
               otb
-              runpodctl
               ;
 
             cloudEnv = pkgs.buildEnv {
               name = "cloudEnv";
               paths = [
                 packages.runpod
-                packages.runpodctl
                 packages.skypilot
-              ];
+              ]
+              ++ (with pkgs; [ runpodctl ]);
             };
 
             coiledEnv = pkgs.buildEnv {
@@ -137,14 +138,6 @@
               ];
             };
 
-            collisionEnv = pkgs.buildEnv {
-              name = "collision-env";
-              paths = [
-                pyPkgs.dask-image
-                packages.google-auth-oauthlib
-              ];
-            };
-
             geoEnv = pkgs.buildEnv {
               name = "geo-env";
               paths = [ pyPkgs.gdal ];
@@ -154,7 +147,14 @@
               name = "geoml-env";
               paths = [
                 packages.verde
-                packages.pyinterp
+              ]
+              ++ (with pyPkgs; [ pyinterp ]);
+            };
+
+            llmEnv = pkgs.buildEnv {
+              name = "llm-env";
+              paths = [
+                packages.notebooklm-py
               ];
             };
 
@@ -243,18 +243,21 @@
 
             miscEnv = pkgs.buildEnv {
               name = "misc-env";
-              paths = with pyPkgs; [ rclone-python ];
+              paths = with pyPkgs; [
+                rclone-python
+#                skorch
+              ];
             };
 
             allPkgsEnv = pkgs.buildEnv {
               name = "allPkgs-env";
               paths = with packages; [
                 cloudEnv
-                collisionEnv
                 coiledEnv
                 geoEnv
                 geomlEnv
                 geoxrEnv
+                llmEnv
                 # mlEnv
                 otbEnv
                 stacEnv

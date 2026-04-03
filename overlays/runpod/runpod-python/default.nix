@@ -44,29 +44,30 @@ buildPythonPackage rec {
     setuptools-scm
   ];
 
-  dependencies =
-    [
-      aiohttp
-      aiohttp-retry
-      backoff
-      boto3
-      click
-      colorama
-      cryptography
-      fastapi
-      paramiko
-      prettytable
-      py-cpuinfo
-      inquirerpy
-      requests
-      tomli
-      tomlkit
-      tqdm-loggable
-      urllib3
-      watchdog
-    ]
-    ++ aiohttp.optional-dependencies.speedups
-    ++ fastapi.optional-dependencies.all;
+  dependencies = [
+    aiohttp
+    aiohttp-retry
+    backoff
+    boto3
+    click
+    colorama
+    cryptography
+    fastapi
+    paramiko
+    prettytable
+    py-cpuinfo
+    inquirerpy
+    requests
+    tomli
+    tomlkit
+    tqdm-loggable
+    urllib3
+    watchdog
+  ]
+  ++ aiohttp.optional-dependencies.speedups
+  ++ fastapi.optional-dependencies.all;
+
+  pythonRelaxDeps = [ "cryptography" ];
 
   pythonImportsCheck = [
     "runpod"
