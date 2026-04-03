@@ -28,6 +28,7 @@
   outputs =
     {
       self,
+      # deadnix: skip
       nixpkgs,
       # deadnix: skip
       nixpkgs-unstable,
@@ -95,6 +96,7 @@
               protobuf
               pyotb
               runpod
+              skorch
               skypilot
               sqlalchemy-adapter
               torch
@@ -241,7 +243,10 @@
 
             miscEnv = pkgs.buildEnv {
               name = "misc-env";
-              paths = with pyPkgs; [ rclone-python ];
+              paths = with pyPkgs; [
+                rclone-python
+                skorch
+              ];
             };
 
             allPkgsEnv = pkgs.buildEnv {
