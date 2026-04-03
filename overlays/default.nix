@@ -52,6 +52,19 @@ final: prev: {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
 
+      skorch = pyPrev.skorch.overridePythonAttrs (_oldAttrs: {
+        disabled = false;
+        disabledTests = (_oldAttrs.disabledTests or [ ]) ++ [
+          "test_binary_classifier_with_compile"
+        ];
+        patches = (_oldAttrs.patches or [ ]) ++ [
+          (prev.fetchpatch {
+            url = "https://patch-diff.githubusercontent.com/raw/skorch-dev/skorch/pull/1082.patch";
+            hash = "sha256-ThsvbTrBruuRNUlay03mnzmknHgcTF9gA6M9JTgM8/w=";
+          })
+        ];
+      });
+
       skypilot = pyFinal.callPackage ./skypilot/. {
         runpod = pyFinal.runpod;
         nebius = pyFinal.nebius;
