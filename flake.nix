@@ -245,7 +245,7 @@
               name = "misc-env";
               paths = with pyPkgs; [
                 rclone-python
-                skorch
+#                skorch
               ];
             };
 
