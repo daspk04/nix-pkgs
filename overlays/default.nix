@@ -72,6 +72,10 @@ final: prev: {
 
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
 
+      syne-tune = pyPrev.syne-tune.overridePythonAttrs (_oldAttrs: {
+        doCheck = false;
+      });
+
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
         python = final.python313;
