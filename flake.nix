@@ -99,6 +99,7 @@
               skorch
               skypilot
               sqlalchemy-adapter
+              syne-tune
               torch
               torchvision
               tensorflow
@@ -171,15 +172,12 @@
                   polars
                   pyarrow
                   pytorch-lightning
-                  syne-tune
                 ]
                 ++ ray.optional-dependencies.air
                 ++ (with packages; [
                   keras
-                  protobuf
                   torch
                   tensorflow
-                  tensorboard
                 ]);
             };
 
@@ -243,12 +241,16 @@
 
             miscEnv = pkgs.buildEnv {
               name = "misc-env";
-              paths = with pyPkgs; [
-                rclone-python
-              ] ++ (with packages; [
-                 optunahub
-                 optuna-integration
-#                skorch
+              paths =
+                with pyPkgs;
+                [
+                  rclone-python
+                ]
+                ++ (with packages; [
+                  optunahub
+                  optuna-integration
+#                  skorch
+                  syne-tune
                 ]);
             };
 
