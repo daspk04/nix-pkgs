@@ -5,6 +5,8 @@ final: prev: {
     otb = prev.otb;
   };
 
+  pdf-oxide = final.callPackage ./pdf-oxide/. { };
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
@@ -47,6 +49,8 @@ final: prev: {
       prefect = pyFinal.callPackage ./prefect/. { };
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
+
+      pdf_oxide = pyFinal.callPackage ./pdf-oxide/python.nix { };
 
       runpod = pyFinal.callPackage ./runpod/runpod-python/. {
         tqdm-loggable = pyFinal.tqdm-loggable;
