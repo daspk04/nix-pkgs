@@ -92,6 +92,7 @@
               optuna-integration
               optunahub
               otbtf
+              pdf_oxide
               prefect
               protobuf
               pyotb
@@ -113,6 +114,7 @@
               ;
             inherit (pkgs)
               otb
+              pdf-oxide
               ;
 
             cloudEnv = pkgs.buildEnv {
@@ -251,6 +253,8 @@
                   optuna-integration
 #                  skorch
                   syne-tune
+#                  pdf-oxide # rust package
+#                  pdf_oxide # python bindings
                 ]);
             };
 
