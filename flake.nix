@@ -108,6 +108,7 @@
               tensorboard
               tqdm-loggable
               types-paramiko
+              vastai
               verde
               xcube
               xcube-sh
@@ -122,6 +123,7 @@
               paths = [
                 packages.runpod
                 packages.skypilot
+                packages.vastai
               ]
               ++ (with pkgs; [ runpodctl ]);
             };

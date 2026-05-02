@@ -98,6 +98,8 @@ final: prev: {
 
       verde = pyFinal.callPackage ./verde/. { };
 
+      vastai = pyFinal.callPackage ./vastai/. { };
+
       xcube = pyFinal.callPackage ./xcube/. {
         cmocean = pyFinal.cmocean;
       };
