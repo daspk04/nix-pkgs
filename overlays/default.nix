@@ -16,6 +16,12 @@ final: prev: {
 
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
+      chonkie-core = pyFinal.callPackage ./chonkie-core/. { };
+
+      chonkie = pyFinal.callPackage ./chonkie/. {
+        chonkie-core = pyFinal.chonkie-core;
+      };
+
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
