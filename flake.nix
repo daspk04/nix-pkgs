@@ -81,6 +81,8 @@
             python = python;
             inherit (pyPkgs)
               botorch
+              chonkie
+              chonkie-core
               cmocean
               google-auth-oauthlib
               gpytorch
