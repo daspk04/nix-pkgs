@@ -9,7 +9,12 @@ let
   common = import ./common.nix { inherit fetchFromGitHub; };
 in
 rustPlatform.buildRustPackage rec {
-  inherit (common) pname version src sourceRoot;
+  inherit (common)
+    pname
+    version
+    src
+    sourceRoot
+    ;
 
   cargoBuildFlags = [
     "-p"
