@@ -255,10 +255,10 @@
                 ++ (with packages; [
                   optunahub
                   optuna-integration
-#                  skorch
+                  #                  skorch
                   syne-tune
-#                  pdf-oxide # rust package
-#                  pdf_oxide # python bindings
+                  #                  pdf-oxide # rust package
+                  #                  pdf_oxide # python bindings
                 ]);
             };
 
