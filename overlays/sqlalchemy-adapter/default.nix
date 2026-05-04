@@ -6,11 +6,11 @@
   pycasbin,
   sqlalchemy,
   setuptools,
-  ...
+  pytestCheckHook,
 }:
 buildPythonPackage rec {
   pname = "sqlalchemy-adapter";
-  version = "1.3.0";
+  version = "1.9.0";
   format = "pyproject";
   docheck = false;
 
@@ -18,16 +18,13 @@ buildPythonPackage rec {
     owner = "officialpycasbin";
     repo = "sqlalchemy-adapter";
     tag = "v${version}";
-    hash = "sha256-/t+4YFfrV20zy6enaL1rBrj2G06z2y71ogaN8MeLFcQ=";
+    hash = "sha256-FjxRSJ+3IIdtKkpZvkL/KzH7gn4IJjCTchABglfcyQ4=";
   };
 
   build-system = [
     setuptools
   ];
 
-  postPatch = ''
-    sed -i 's/casbin/pycasbin/' requirements.txt
-  '';
 
   dependencies = [
     pycasbin
@@ -36,6 +33,10 @@ buildPythonPackage rec {
 
   pythonImportsCheck = [
     "sqlalchemy_adapter"
+  ];
+
+  nativeCheckInputs = [
+    pytestCheckHook
   ];
 
   meta = {

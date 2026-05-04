@@ -81,6 +81,8 @@
             python = python;
             inherit (pyPkgs)
               botorch
+              chonkie
+              chonkie-core
               cmocean
               google-auth-oauthlib
               gpytorch
@@ -92,6 +94,7 @@
               optuna-integration
               optunahub
               otbtf
+              pdf_oxide
               prefect
               protobuf
               pyotb
@@ -99,6 +102,7 @@
               skorch
               skypilot
               sqlalchemy-adapter
+              syne-tune
               torch
               torchvision
               tensorflow
@@ -106,12 +110,14 @@
               tensorboard
               tqdm-loggable
               types-paramiko
+              vastai
               verde
               xcube
               xcube-sh
               ;
             inherit (pkgs)
               otb
+              pdf-oxide
               ;
 
             cloudEnv = pkgs.buildEnv {
@@ -119,6 +125,7 @@
               paths = [
                 packages.runpod
                 packages.skypilot
+                packages.vastai
               ]
               ++ (with pkgs; [ runpodctl ]);
             };
@@ -171,15 +178,12 @@
                   polars
                   pyarrow
                   pytorch-lightning
-                  syne-tune
                 ]
                 ++ ray.optional-dependencies.air
                 ++ (with packages; [
                   keras
-                  protobuf
                   torch
                   tensorflow
-                  tensorboard
                 ]);
             };
 
@@ -243,10 +247,19 @@
 
             miscEnv = pkgs.buildEnv {
               name = "misc-env";
-              paths = with pyPkgs; [
-                rclone-python
-#                skorch
-              ];
+              paths =
+                with pyPkgs;
+                [
+                  rclone-python
+                ]
+                ++ (with packages; [
+                  optunahub
+                  optuna-integration
+                  #                  skorch
+                  syne-tune
+                  #                  pdf-oxide # rust package
+                  #                  pdf_oxide # python bindings
+                ]);
             };
 
             allPkgsEnv = pkgs.buildEnv {

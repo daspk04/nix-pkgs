@@ -5,6 +5,8 @@ final: prev: {
     otb = prev.otb;
   };
 
+  pdf-oxide = final.callPackage ./pdf-oxide/. { };
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
@@ -13,6 +15,12 @@ final: prev: {
       });
 
       cmocean = pyFinal.callPackage ./cmocean/. { };
+
+      chonkie-core = pyFinal.callPackage ./chonkie-core/. { };
+
+      chonkie = pyFinal.callPackage ./chonkie/. {
+        chonkie-core = pyFinal.chonkie-core;
+      };
 
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
@@ -48,6 +56,8 @@ final: prev: {
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
+      pdf_oxide = pyFinal.callPackage ./pdf-oxide/python.nix { };
+
       runpod = pyFinal.callPackage ./runpod/runpod-python/. {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
@@ -68,9 +78,14 @@ final: prev: {
       skypilot = pyFinal.callPackage ./skypilot/. {
         runpod = pyFinal.runpod;
         nebius = pyFinal.nebius;
+        inherit (final) buildNpmPackage;
       };
 
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
+
+      syne-tune = pyPrev.syne-tune.overridePythonAttrs (_oldAttrs: {
+        doCheck = false;
+      });
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
@@ -88,6 +103,8 @@ final: prev: {
       types-paramiko = pyFinal.callPackage ./types-paramiko/. { };
 
       verde = pyFinal.callPackage ./verde/. { };
+
+      vastai = pyFinal.callPackage ./vastai/. { };
 
       xcube = pyFinal.callPackage ./xcube/. {
         cmocean = pyFinal.cmocean;

@@ -1,0 +1,33 @@
+--- a/sky/catalog/data_fetchers/fetch_vast.py
++++ b/sky/catalog/data_fetchers/fetch_vast.py
+@@ -127,9 +127,13 @@
+         priceMap[instance_type].append(entry)
+ 
+     for instanceList in priceMap.values():
+-        priceList = sorted([x['Price'] for x in instanceList])
+-        index = math.ceil(0.5 * len(priceList)) - 1
+-        priceTarget = priceList[index]
++        # upstream uses
++        # `math.ceil(0.5 * len) - 1` to keep only the cheapest ~half of
++        # offers per instance_type. That skews toward residential hosts and
++        # drops more expensive but still legitimate regions
++        # Keep every offer so SkyPilot's optimizer sees the
++        # full menu.
++        priceTarget = max(x['Price'] for x in instanceList)
+         toList: List = []
+         for instance in instanceList:
+             if instance['Price'] <= priceTarget:
+@@ -139,8 +143,12 @@
+         maxBid = max([x.get('SpotPrice') for x in toList])
+         for instance in toList:
+             hosting_type = instance.get('HostingType', 0)
++            # upstream keys dedup
++            # on `Region[-2:]` which is only the continent code (NA / EU /
++            # AS). That collapses all 50 US states into one bucket and drops
++            # TX / OR / MD / etc. Use the full region for per-state slots.
+             stub = (f'{instance["InstanceType"]} '
+-                    f'{instance["Region"][-2:]} {hosting_type}')
++                    f'{instance["Region"]} {hosting_type}')
+             if stub in seen:
+                 printstub = f'{stub}#print'
+                 if printstub not in seen:

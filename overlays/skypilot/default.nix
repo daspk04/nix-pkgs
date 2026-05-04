@@ -1,7 +1,10 @@
 {
   lib,
-  fetchPypi,
+  fetchFromGitHub,
   buildPythonPackage,
+  buildNpmPackage,
+
+  python,
 
   setuptools,
   setuptools-scm,
@@ -12,6 +15,7 @@
   aiohttp,
   aiosqlite,
   alembic,
+  asyncpg,
   bcrypt,
   cachetools,
   click,
@@ -21,11 +25,13 @@
   filelock,
   gitpython,
   httpx,
+  ijson,
   jinja2,
   jsonschema,
   networkx,
   packaging,
   pandas,
+  paramiko,
   passlib,
   pendulum,
   pip,
@@ -77,25 +83,36 @@
   pyvmomi,
   ray,
   runpod,
+  vastai,
   websockets,
   ...
 }:
-buildPythonPackage rec {
+let
   pname = "skypilot";
-  version = "0.10.3.post1";
-  pyproject = true;
-  src = fetchPypi {
-    inherit version pname;
-    hash = "sha256-SawrxpwCTlK8R70SRyEbGd0wXwt9X1dt7db+Z/kNaQU=";
+  version = "0.12.0";
+
+  src = fetchFromGitHub {
+    owner = "skypilot-org";
+    repo = "skypilot";
+    tag = "v${version}";
+    hash = "sha256-zxkduComvFuSbWnWSw1PYalGdVhiwCIjElXEg7VPw88=";
   };
 
-  # source doesn't have dashboard artifacts outputs needs to build them via npm
-  #  src = fetchFromGitHub {
-  #    owner = "skypilot-org";
-  #    repo = "skypilot";
-  #    tag = "v${version}";
-  #    hash = "sha256-iKNvzGiKM4QSG25CusZ1YRIou010uWyMLEAaFIww+FA=";
-  #  };
+  dashboard = buildNpmPackage {
+    inherit pname version src;
+
+    sourceRoot = "${src.name}/sky/dashboard";
+    npmDepsHash = "sha256-8uZzkDJkaDPFXXsGy29jkaw6g8bPe3drbboYHHa6YuU=";
+
+    installPhase = ''
+      mkdir -p $out
+      cp -r out/* $out/
+    '';
+  };
+in
+buildPythonPackage rec {
+  inherit pname version src;
+  pyproject = true;
 
   nativeBuildInputs = [
     writableTmpDirAsHomeHook
@@ -106,9 +123,15 @@ buildPythonPackage rec {
     setuptools-scm
   ];
 
+  env.SETUPTOOLS_SCM_PRETEND_VERSION = version;
+
+  patches = [
+    ./skypilot-vast-fetcher-dedup.patch
+    ./skypilot-vast-datacenter-warn.patch
+  ];
+
   postPatch = ''
     sed -i 's/casbin/pycasbin/g' sky/setup_files/dependencies.py
-    sed -i 's/types-paramiko/#types-paramiko/g' sky/setup_files/dependencies.py
   '';
 
   # https://github.com/skypilot-org/skypilot/blob/master/sky/setup_files/dependencies.py
@@ -117,6 +140,7 @@ buildPythonPackage rec {
     aiofiles
     aiosqlite
     alembic
+    asyncpg
     bcrypt
     cachetools
     click
@@ -126,11 +150,13 @@ buildPythonPackage rec {
     fastapi
     gitpython
     httpx
+    ijson
     jinja2
     jsonschema
     networkx
     packaging
     pandas
+    paramiko
     passlib
     pendulum
     pip
@@ -238,7 +264,7 @@ buildPythonPackage rec {
 
     ssh = self.kubernetes;
 
-    #    vast = [vastai-sdk];
+    vast = [vastai];
 
     vsphere = [
       pyvmomi
@@ -251,6 +277,11 @@ buildPythonPackage rec {
   ];
 
   pythonRelaxDeps = true;
+
+  postInstall = ''
+    mkdir -p $out/${python.sitePackages}/sky/dashboard/out
+    cp -r ${dashboard}/* $out/${python.sitePackages}/sky/dashboard/out/
+  '';
 
   versionCheckProgramArg = "--version";
 
