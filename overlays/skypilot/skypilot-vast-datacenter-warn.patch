@@ -1,0 +1,35 @@
+--- a/sky/catalog/vast_catalog.py
++++ b/sky/catalog/vast_catalog.py
+@@ -9,6 +9,7 @@
+ 
+ import pandas as pd
+ 
++from sky import sky_logging
+ from sky.catalog import common
+ from sky.utils import resources_utils
+ from sky.utils import ux_utils
+@@ -16,6 +17,7 @@
+ if typing.TYPE_CHECKING:
+     from sky.clouds import cloud
+ 
++logger = sky_logging.init_logger(__name__)
+ _df = common.read_catalog('vast/vms.csv')
+ 
+ 
+@@ -25,6 +27,16 @@
+ 
+     hosting_type: 0 = Consumer hosted, 1 = Datacenter hosted
+     """
++    # LOCAL PATCH (dcm-model-runpod-skypilot): warn when the filter is a
++    # no-op because the cached catalog pre-dates the HostingType column.
++    # Users were silently getting consumer-hosted machines despite asking
++    # for datacenter_only. See sky/VAST_MIGRATION.md for the refresh flow.
++    if datacenter_only and 'HostingType' not in df.columns:
++        logger.warning(
++            'vast: datacenter_only=True requested but HostingType column '
++            'is missing from the cached catalog. Filter is a no-op. '
++            'Refresh with `make refresh-vast-catalog` (or delete '
++            '~/.sky/catalogs/*/vast/vms.csv) to enable the filter.')
+     if not datacenter_only or 'HostingType' not in df.columns:
+         return df
+     return df[df['HostingType'] >= 1]
