@@ -83,6 +83,7 @@
   pyvmomi,
   ray,
   runpod,
+  vastai,
   websockets,
   ...
 }:
@@ -123,6 +124,11 @@ buildPythonPackage rec {
   ];
 
   env.SETUPTOOLS_SCM_PRETEND_VERSION = version;
+
+  patches = [
+    ./skypilot-vast-fetcher-dedup.patch
+    ./skypilot-vast-datacenter-warn.patch
+  ];
 
   postPatch = ''
     sed -i 's/casbin/pycasbin/g' sky/setup_files/dependencies.py
@@ -258,7 +264,7 @@ buildPythonPackage rec {
 
     ssh = self.kubernetes;
 
-    #    vast = [vastai-sdk];
+    vast = [vastai];
 
     vsphere = [
       pyvmomi
