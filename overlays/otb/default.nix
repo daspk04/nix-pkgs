@@ -162,8 +162,9 @@ in
         ])
         ++ [
           (''
-            substituteInPlace CMakeLists.txt --replace-fail "CXX_STANDARD" ""
-            substituteInPlace Modules/ThirdParty/6S/src/otb_6S_f2c.h --replace-fail "register " ""
+            
+                        substituteInPlace CMakeLists.txt --replace-fail "CXX_STANDARD" ""
+                        substituteInPlace Modules/ThirdParty/6S/src/otb_6S_f2c.h --replace-fail "register " ""
           '')
         ]
       );

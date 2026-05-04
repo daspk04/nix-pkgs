@@ -9,7 +9,12 @@ let
   common = import ./common.nix { inherit fetchFromGitHub; };
 in
 buildPythonPackage rec {
-  inherit (common) pname version src sourceRoot;
+  inherit (common)
+    pname
+    version
+    src
+    sourceRoot
+    ;
   pyproject = true;
   docheck = false;
 

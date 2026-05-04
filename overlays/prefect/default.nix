@@ -83,28 +83,29 @@ buildPythonPackage rec {
   ];
 
   postPatch = ''
-    substituteInPlace pyproject.toml --replace-fail 'requires = ["hatchling", "versioningit"]' 'requires = ["hatchling"]'
-    substituteInPlace pyproject.toml --replace-fail 'dynamic = ["version"]' 'version = "${version}"'
-    substituteInPlace src/prefect/__init__.py \
-      --replace-fail 'from . import _build_info' "" \
-      --replace-fail 'del _build_info, pathlib' "del pathlib" \
-      --replace-fail '__version__ = _build_info.__version__' '__version__ = "${version}"' \
-      --replace-fail '__version_info__: "VersionInfo" = cast(
-        "VersionInfo",
-        {
-            "version": __version__,
-            "date": _build_info.__build_date__,
-            "full-revisionid": _build_info.__git_commit__,
+    
+        substituteInPlace pyproject.toml --replace-fail 'requires = ["hatchling", "versioningit"]' 'requires = ["hatchling"]'
+        substituteInPlace pyproject.toml --replace-fail 'dynamic = ["version"]' 'version = "${version}"'
+        substituteInPlace src/prefect/__init__.py \
+          --replace-fail 'from . import _build_info' "" \
+          --replace-fail 'del _build_info, pathlib' "del pathlib" \
+          --replace-fail '__version__ = _build_info.__version__' '__version__ = "${version}"' \
+          --replace-fail '__version_info__: "VersionInfo" = cast(
+            "VersionInfo",
+            {
+                "version": __version__,
+                "date": _build_info.__build_date__,
+                "full-revisionid": _build_info.__git_commit__,
+                "error": None,
+                "dirty": _build_info.__dirty__,
+            },
+        )' '__version_info__ = {
+            "version": "${version}",
+            "date": "1970-01-01T00:00:00+00:00",
+            "full-revisionid": "${src.rev}",
             "error": None,
-            "dirty": _build_info.__dirty__,
-        },
-    )' '__version_info__ = {
-        "version": "${version}",
-        "date": "1970-01-01T00:00:00+00:00",
-        "full-revisionid": "${src.rev}",
-        "error": None,
-        "dirty": False,
-    }'
+            "dirty": False,
+        }'
   '';
 
   # https://github.com/conda-forge/prefect-feedstock/blob/main/recipe/meta.yaml

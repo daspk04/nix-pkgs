@@ -18,10 +18,11 @@ let
 in
 tensorflow.overrideAttrs (oldAttrs: {
   postInstall = oldAttrs.postInstall or "" + ''
-    mkdir -p $out/${python.sitePackages}/tensorflow/include/tensorflow/cc/saved_model/
-    cp ${tfSrc}/tensorflow/cc/saved_model/tag_constants.h \
-       $out/${python.sitePackages}/tensorflow/include/tensorflow/cc/saved_model/
-    cp ${tfSrc}/tensorflow/cc/saved_model/signature_constants.h \
-       $out/${python.sitePackages}/tensorflow/include/tensorflow/cc/saved_model/
+    
+        mkdir -p $out/${python.sitePackages}/tensorflow/include/tensorflow/cc/saved_model/
+        cp ${tfSrc}/tensorflow/cc/saved_model/tag_constants.h \
+           $out/${python.sitePackages}/tensorflow/include/tensorflow/cc/saved_model/
+        cp ${tfSrc}/tensorflow/cc/saved_model/signature_constants.h \
+           $out/${python.sitePackages}/tensorflow/include/tensorflow/cc/saved_model/
   '';
 })
