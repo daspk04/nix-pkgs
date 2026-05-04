@@ -25,9 +25,6 @@ buildPythonPackage rec {
     setuptools
   ];
 
-  postPatch = ''
-    sed -i 's/casbin/pycasbin/' requirements.txt
-  '';
 
   dependencies = [
     pycasbin
