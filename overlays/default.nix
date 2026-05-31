@@ -10,6 +10,12 @@ final: prev: {
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
+      autogluon-common = (pyFinal.callPackage ./autogluon/. { }).autogluon-common;
+      autogluon-core = (pyFinal.callPackage ./autogluon/. { }).autogluon-core;
+      autogluon-features = (pyFinal.callPackage ./autogluon/. { }).autogluon-features;
+      autogluon-tabular = (pyFinal.callPackage ./autogluon/. { }).autogluon-tabular;
+
+
       botorch = pyPrev.botorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
@@ -25,6 +31,10 @@ final: prev: {
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
+
+      imodels = pyFinal.callPackage ./imodels/. { };
+
+      interpret-core = pyFinal.callPackage ./interpret-core/. { };
 
       keras = pyPrev.keras.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
@@ -55,6 +65,8 @@ final: prev: {
       prefect = pyFinal.callPackage ./prefect/. { };
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
+
+      pytabkit = pyFinal.callPackage ./pytabkit/. { };
 
       pdf_oxide = pyFinal.callPackage ./pdf-oxide/python.nix { };
 
@@ -87,16 +99,25 @@ final: prev: {
         doCheck = false;
       });
 
+      tabicl = pyFinal.callPackage ./tabicl/. { };
+
+      tabdpt = pyFinal.callPackage ./tabdpt/. { };
+
+      tabpfn-common-utils = pyFinal.callPackage ./tabpfn-common-utils/. { };
+
+      tabpfn = pyFinal.callPackage ./tabpfn/. { };
+
+
       tensorflow = pyFinal.callPackage ./tensorflow/. {
-        tensorflow = pyFinal.tensorflow-bin;
+        tensorflow = pyPrev.tensorflow;
         python = final.python313;
       };
 
       tetra-rp = pyFinal.callPackage ./tetra-rp/. { };
 
-      torch = pyFinal.torch-bin;
+      torch = pyPrev.torch;
 
-      torchvision = pyFinal.torchvision-bin;
+      torchvision = pyPrev.torchvision;
 
       tqdm-loggable = pyFinal.callPackage ./tqdm-loggable/. { };
 

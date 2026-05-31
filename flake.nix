@@ -80,12 +80,18 @@
           packages = {
             python = python;
             inherit (pyPkgs)
+              autogluon-common
+              autogluon-core
+              autogluon-features
+              autogluon-tabular
               botorch
               chonkie
               chonkie-core
               cmocean
               google-auth-oauthlib
               gpytorch
+              imodels
+              interpret-core
               keras
               linear-operator
               nebius
@@ -98,11 +104,16 @@
               prefect
               protobuf
               pyotb
+              pytabkit
               runpod
               skorch
               skypilot
               sqlalchemy-adapter
               syne-tune
+              tabicl
+              tabdpt
+              tabpfn-common-utils
+              tabpfn
               torch
               torchvision
               tensorflow
