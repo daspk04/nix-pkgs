@@ -175,6 +175,10 @@ buildPythonPackage rec {
   pythonRelaxDeps = [
     "click"
     "typer"
+    "packaging"
+    "pytz"
+    "websockets"
+    "whenever"
   ];
 
   versionCheckProgramArg = "--version";

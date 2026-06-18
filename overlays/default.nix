@@ -14,6 +14,10 @@ final: prev: {
         doCheck = false;
       });
 
+      borb = pyPrev.borb.overridePythonAttrs (_oldAttrs: {
+        doCheck = false;
+      });
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
 
       chonkie-core = pyFinal.callPackage ./chonkie-core/. { };
@@ -83,8 +87,16 @@ final: prev: {
 
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
 
-      syne-tune = pyPrev.syne-tune.overridePythonAttrs (_oldAttrs: {
+      syne-tune = pyPrev.syne-tune.overridePythonAttrs (oldAttrs: {
         doCheck = false;
+        dependencies =
+          (oldAttrs.dependencies or [ ])
+          ++ (with pyFinal; [
+            statsmodels
+            scikit-learn
+            xgboost
+            tqdm
+          ]);
       });
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {

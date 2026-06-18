@@ -50,6 +50,14 @@ buildPythonPackage rec {
       --replace-fail 'cryptography<=46.0.4' 'cryptography>=46.0.0'
   '';
 
+  pythonRelaxDeps = [
+    "borb"
+    "aiodns"
+    "pycares"
+    "psutil"
+    "cryptography"
+  ];
+
   dependencies = [
     xdg
     borb
