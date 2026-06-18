@@ -25,7 +25,6 @@ buildPythonPackage rec {
     setuptools
   ];
 
-
   dependencies = [
     pycasbin
     sqlalchemy

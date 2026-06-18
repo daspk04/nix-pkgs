@@ -264,7 +264,7 @@ buildPythonPackage rec {
 
     ssh = self.kubernetes;
 
-    vast = [vastai];
+    vast = [ vastai ];
 
     vsphere = [
       pyvmomi

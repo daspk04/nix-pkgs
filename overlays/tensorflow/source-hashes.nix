@@ -11,6 +11,9 @@ let
     "2.20.0" = {
       gitHash = "sha256-nGWQ+T5FmL+hZucbjQlCRTJM1i//gSzua1QxcBFeqwM=";
     };
+    "2.21.0" = {
+      gitHash = "sha256-Hs3g80wSHex1ejz7H8eu6MJMzwthx58sPGDh/dG66FQ=";
+    };
   };
 in
 builtins.getAttr version hashes
