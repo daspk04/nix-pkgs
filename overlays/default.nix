@@ -60,8 +60,6 @@ final: prev: {
 
       pyotb = pyFinal.callPackage ./pyotb/. { };
 
-      pdf_oxide = pyFinal.callPackage ./pdf-oxide/python.nix { };
-
       runpod = pyFinal.callPackage ./runpod/runpod-python/. {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };

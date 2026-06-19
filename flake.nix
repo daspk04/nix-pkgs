@@ -94,7 +94,6 @@
               optuna-integration
               optunahub
               otbtf
-              pdf_oxide
               prefect
               protobuf
               pyotb
