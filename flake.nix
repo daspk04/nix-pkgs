@@ -99,7 +99,6 @@
               protobuf
               pyotb
               runpod
-              skypilot
               sqlalchemy-adapter
               syne-tune
               torch
@@ -123,7 +122,6 @@
               name = "cloudEnv";
               paths = [
                 packages.runpod
-                packages.skypilot
                 packages.vastai
               ]
               ++ (with pkgs; [ runpodctl ]);

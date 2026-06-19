@@ -66,12 +66,6 @@ final: prev: {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
 
-      skypilot = pyFinal.callPackage ./skypilot/. {
-        runpod = pyFinal.runpod;
-        nebius = pyFinal.nebius;
-        inherit (final) buildNpmPackage;
-      };
-
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
 
       syne-tune = pyPrev.syne-tune.overridePythonAttrs (oldAttrs: {
