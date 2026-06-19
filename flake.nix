@@ -99,7 +99,6 @@
               protobuf
               pyotb
               runpod
-              skorch
               skypilot
               sqlalchemy-adapter
               syne-tune
@@ -255,7 +254,6 @@
                 ++ (with packages; [
                   optunahub
                   optuna-integration
-                  #                  skorch
                   syne-tune
                   #                  pdf-oxide # rust package
                   #                  pdf_oxide # python bindings
