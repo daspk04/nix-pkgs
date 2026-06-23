@@ -64,6 +64,10 @@ final: prev: {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
 
+      skorch = pyPrev.skorch.overridePythonAttrs (old: {
+        nativeCheckInputs = (old.nativeCheckInputs or [ ]) ++ [ final.openssl ];
+      });
+
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
 
       syne-tune = pyPrev.syne-tune.overridePythonAttrs (oldAttrs: {
