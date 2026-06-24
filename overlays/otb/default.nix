@@ -204,7 +204,8 @@ in
       ++ optionals enableOtbOnnx [
         onnxruntime
         onnxruntime.dev
-      ];
+      ]
+      ++ optional stdenv.cc.isClang pkgs.llvmPackages.openmp;
     propagatedBuildInputs =
       (oldAttrs.propagatedBuildInputs or [ ]) ++ optionals enableTf [ tensorflow ];
 
