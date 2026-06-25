@@ -117,7 +117,6 @@
               ;
             inherit (pkgs)
               otb
-              pdf-oxide
               ;
 
             cloudEnv = pkgs.buildEnv {
