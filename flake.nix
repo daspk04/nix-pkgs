@@ -4,17 +4,19 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
+      "https://cache.nixos-cuda.org"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
     ];
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils-plus = {
-      url = "github:gytis-ivaskevicius/flake-utils-plus";
+      url = "github:gytis-ivaskevicius/flake-utils-plus?ref=v1.6.0";
     };
     nix2container = {
       url = "github:nlewo/nix2container";
@@ -94,13 +96,11 @@
               optuna-integration
               optunahub
               otbtf
-              pdf_oxide
               prefect
               protobuf
               pyotb
               runpod
               skorch
-              skypilot
               sqlalchemy-adapter
               syne-tune
               torch
@@ -124,7 +124,6 @@
               name = "cloudEnv";
               paths = [
                 packages.runpod
-                packages.skypilot
                 packages.vastai
               ]
               ++ (with pkgs; [ runpodctl ]);
@@ -178,6 +177,7 @@
                   polars
                   pyarrow
                   pytorch-lightning
+                  skorch
                 ]
                 ++ ray.optional-dependencies.air
                 ++ (with packages; [
@@ -255,7 +255,6 @@
                 ++ (with packages; [
                   optunahub
                   optuna-integration
-                  #                  skorch
                   syne-tune
                   #                  pdf-oxide # rust package
                   #                  pdf_oxide # python bindings

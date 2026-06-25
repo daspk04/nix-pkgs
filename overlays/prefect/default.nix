@@ -169,12 +169,16 @@ buildPythonPackage rec {
     whenever
   ]
   ++ httpx.optional-dependencies.http2
-  ++ python-socks.optional-dependencies.asyncio
+  ++ python-socks.optional-dependencies.anyio
   ++ sqlalchemy.optional-dependencies.asyncio;
 
   pythonRelaxDeps = [
     "click"
     "typer"
+    "packaging"
+    "pytz"
+    "websockets"
+    "whenever"
   ];
 
   versionCheckProgramArg = "--version";
