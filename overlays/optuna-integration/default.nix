@@ -17,7 +17,7 @@ buildPythonPackage rec {
     owner = "optuna";
     repo = "optuna-integration";
     tag = "v${version}";
-    hash = "sha256-/S0ifB9DCVHYG5+3DNHq3vRa2VHOE4wLXHSi6wzqbFE=";
+    hash = "sha256-DbQg1V/7rDxtDoo/l6OxlkL0KiQy99lequC0PRTU2yw=";
   };
 
   build-system = [

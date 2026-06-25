@@ -5,6 +5,8 @@ final: prev: {
     otb = prev.otb;
   };
 
+  pdf-oxide = final.callPackage ./pdf-oxide/. { };
+
   pythonPackagesExtensions = prev.pythonPackagesExtensions ++ [
     (pyFinal: pyPrev: {
 
@@ -12,7 +14,17 @@ final: prev: {
         doCheck = false;
       });
 
+      borb = pyPrev.borb.overridePythonAttrs (_oldAttrs: {
+        doCheck = false;
+      });
+
       cmocean = pyFinal.callPackage ./cmocean/. { };
+
+      chonkie-core = pyFinal.callPackage ./chonkie-core/. { };
+
+      chonkie = pyFinal.callPackage ./chonkie/. {
+        chonkie-core = pyFinal.chonkie-core;
+      };
 
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
@@ -52,25 +64,23 @@ final: prev: {
         tqdm-loggable = pyFinal.tqdm-loggable;
       };
 
-      skorch = pyPrev.skorch.overridePythonAttrs (_oldAttrs: {
-        disabled = false;
-        disabledTests = (_oldAttrs.disabledTests or [ ]) ++ [
-          "test_binary_classifier_with_compile"
-        ];
-        patches = (_oldAttrs.patches or [ ]) ++ [
-          (prev.fetchpatch {
-            url = "https://patch-diff.githubusercontent.com/raw/skorch-dev/skorch/pull/1082.patch";
-            hash = "sha256-ThsvbTrBruuRNUlay03mnzmknHgcTF9gA6M9JTgM8/w=";
-          })
-        ];
+      skorch = pyPrev.skorch.overridePythonAttrs (old: {
+        nativeCheckInputs = (old.nativeCheckInputs or [ ]) ++ [ final.openssl ];
       });
 
-      skypilot = pyFinal.callPackage ./skypilot/. {
-        runpod = pyFinal.runpod;
-        nebius = pyFinal.nebius;
-      };
-
       sqlalchemy-adapter = pyFinal.callPackage ./sqlalchemy-adapter/. { };
+
+      syne-tune = pyPrev.syne-tune.overridePythonAttrs (oldAttrs: {
+        doCheck = false;
+        dependencies =
+          (oldAttrs.dependencies or [ ])
+          ++ (with pyFinal; [
+            statsmodels
+            scikit-learn
+            xgboost
+            tqdm
+          ]);
+      });
 
       tensorflow = pyFinal.callPackage ./tensorflow/. {
         tensorflow = pyFinal.tensorflow-bin;
@@ -88,6 +98,8 @@ final: prev: {
       types-paramiko = pyFinal.callPackage ./types-paramiko/. { };
 
       verde = pyFinal.callPackage ./verde/. { };
+
+      vastai = pyFinal.callPackage ./vastai/. { };
 
       xcube = pyFinal.callPackage ./xcube/. {
         cmocean = pyFinal.cmocean;
