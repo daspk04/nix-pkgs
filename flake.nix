@@ -87,6 +87,7 @@
               chonkie-core
               cmocean
               google-auth-oauthlib
+              google-colab-cli
               gpytorch
               keras
               linear-operator

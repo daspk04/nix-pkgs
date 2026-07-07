@@ -26,9 +26,17 @@ final: prev: {
         chonkie-core = pyFinal.chonkie-core;
       };
 
+      google-colab-cli = pyFinal.callPackage ./google-colab-cli/. { };
+
       gpytorch = pyPrev.gpytorch.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
       });
+
+      jupyter-kernel-client = pyFinal.callPackage ./jupyter-kernel-client/. {
+        jupyter-mimetypes = pyFinal.jupyter-mimetypes;
+      };
+
+      jupyter-mimetypes = pyFinal.callPackage ./jupyter-mimetypes/. { };
 
       keras = pyPrev.keras.overridePythonAttrs (_oldAttrs: {
         doCheck = false;
